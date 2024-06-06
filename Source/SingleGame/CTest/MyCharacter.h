@@ -59,6 +59,7 @@ protected:
 
 	bool bCanSpawnShield = true;
 	int mShieldNum = 1;
+	int mMaxShieldNum = 8;
 	float mDistanceToShield = 200.f;
 	float mShieldTime = 0.f;
 	float mShieldCoolTime = 4.f;

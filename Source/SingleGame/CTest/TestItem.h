@@ -6,6 +6,8 @@
 #include "GameFramework/Actor.h"
 #include "TestItem.generated.h"
 
+class ATestMaze;
+
 UCLASS()
 class SINGLEGAME_API ATestItem : public AActor
 {
@@ -41,6 +43,12 @@ protected:
 			UPrimitiveComponent* OtherComp,
 			int32 OtherBodyIndex);
 
+public:
+	void SetMaze(ATestMaze* Maze)
+	{
+		mMaze = Maze;
+	}
+
 protected:
 	// 6면체 충돌체
 	UPROPERTY(VisibleAnywhere)
@@ -48,4 +56,7 @@ protected:
 
 	UPROPERTY(VisibleAnywhere)
 	UStaticMeshComponent* mMesh;
+
+	UPROPERTY(EditAnywhere)
+	ATestMaze* mMaze = nullptr;
 };

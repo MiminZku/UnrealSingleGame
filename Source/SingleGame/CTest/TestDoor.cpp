@@ -104,9 +104,9 @@ void ATestDoor::CollisionBeginOverlap(UPrimitiveComponent* OverlappedComponent,
 	{
 		FVector playerLoc = Player->GetActorLocation();	playerLoc.Z = 0;
 		FVector doorLoc = GetActorLocation();			doorLoc.Z = 0;
-		FVector vecToPlayer = doorLoc - playerLoc;
+		FVector vecToPlayer = playerLoc - doorLoc;
 		double dot = FVector::DotProduct(vecToPlayer, GetActorForwardVector());
-		bDir = (dot > 0) ? true : false;
+		bDir = (dot < 0) ? true : false;
 		OpenDoor();
 	}
 }
@@ -133,3 +133,7 @@ void ATestDoor::CloseDoor()
 	mState = EDoorState::Closing;
 }
 
+void ATestDoor::DisableCollision()
+{
+	mBoxCollision->SetCollisionEnabled(ECollisionEnabled::NoCollision);
+}

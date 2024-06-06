@@ -52,6 +52,7 @@ protected:
 public:
 	void OpenDoor();
 	void CloseDoor();
+	void DisableCollision();
 
 protected:
 	// 6면체 충돌체

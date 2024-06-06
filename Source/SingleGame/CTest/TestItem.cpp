@@ -3,6 +3,8 @@
 
 #include "TestItem.h"
 #include "TestGameMode.h"
+#include "MyCharacter.h"
+#include "TestMaze.h"
 
 // Sets default values
 ATestItem::ATestItem()
@@ -16,7 +18,6 @@ ATestItem::ATestItem()
 
 	static ConstructorHelpers::FObjectFinder<UStaticMesh>
 		MeshAsset(TEXT("/Script/Engine.StaticMesh'/Game/Test/TestMesh/Cube.Cube'"));
-
 	if (MeshAsset.Succeeded())
 	{
 		mMesh->SetStaticMesh(MeshAsset.Object);
@@ -59,13 +60,21 @@ void ATestItem::CollisionBeginOverlap(UPrimitiveComponent* OverlappedComponent,
 {
 	UE_LOG(Sac6, Warning, TEXT("Begin Overlap"));
 
-	ATestGameMode* GameMode = GetWorld()->GetAuthGameMode<ATestGameMode>();
-	if (GameMode)
+	AMyCharacter* Player = Cast<AMyCharacter>(OtherActor);
+	if (Player)
 	{
-		GameMode->AddScore(10);
-	}
+		ATestGameMode* GameMode = GetWorld()->GetAuthGameMode<ATestGameMode>();
+		if (GameMode)
+		{
+			GameMode->AddScore(10);
+		}
 
-	Destroy();
+		if (nullptr != mMaze)
+		{
+			mMaze->DecreaseItem();
+		}
+		Destroy();
+	}
 }
 
 void ATestItem::CollisionEndOverlap(UPrimitiveComponent* OverlappedComponent,

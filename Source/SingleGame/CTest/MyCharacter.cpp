@@ -256,5 +256,5 @@ void AMyCharacter::ShieldAction(const FInputActionValue& Value)
 
 		mShieldSpawnDegree += 360.f / mShieldNum;
 	}
-	++mShieldNum;
+	if(mShieldNum < mMaxShieldNum)	++mShieldNum;
 }
