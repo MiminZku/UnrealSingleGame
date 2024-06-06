@@ -21,7 +21,10 @@ ATestShield::ATestShield()
 		mMesh->SetStaticMesh(MeshAsset.Object);
 	}
 
-	mMesh->SetRelativeScale3D(FVector(0.1f, 0.75f, 0.75f));
+	mMesh->SetRelativeScale3D(FVector(0.1f, 0.75f, 0.75f)); 
+	// 카메라 충돌 무시
+	mMesh->SetCollisionResponseToChannel(ECollisionChannel::ECC_Camera, 
+		ECollisionResponse::ECR_Ignore);
 
 	SetLifeSpan(3.f);
 }

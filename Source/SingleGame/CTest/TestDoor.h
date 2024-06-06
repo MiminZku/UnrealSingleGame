@@ -6,6 +6,15 @@
 #include "GameFramework/Actor.h"
 #include "TestDoor.generated.h"
 
+enum class EDoorState
+{
+	Closed,
+	Opening,
+	Opened,
+	Closing,
+	End
+};
+
 UCLASS()
 class SINGLEGAME_API ATestDoor : public AActor
 {
@@ -40,6 +49,7 @@ protected:
 		UPrimitiveComponent* OtherComp,
 		int32 OtherBodyIndex);
 
+public:
 	void OpenDoor();
 	void CloseDoor();
 
@@ -50,4 +60,8 @@ protected:
 
 	UPROPERTY(VisibleAnywhere)
 	UStaticMeshComponent* mMesh;
+
+	float mRotateSpeed = 100.f;
+	EDoorState mState = EDoorState::Closed;
+	bool bDir = true;	// true : forward 방향으로 열림, false : 반대방향으로 열림
 };
