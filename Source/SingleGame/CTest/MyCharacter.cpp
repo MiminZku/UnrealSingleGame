@@ -51,7 +51,6 @@ AMyCharacter::AMyCharacter()
 	// class finder 사용 시 레퍼런스 끝에 반드시 _C 붙여주어야 함
 	static ConstructorHelpers::FClassFinder<AActor>
 		TestBullet(TEXT("/Script/Engine.Blueprint'/Game/Test/TestBlueprint/BP_TestBullet.BP_TestBullet_C'"));
-
 	if (TestBullet.Succeeded())
 	{
 		mTestBullet = TestBullet.Class;
@@ -59,7 +58,6 @@ AMyCharacter::AMyCharacter()
 
 	static ConstructorHelpers::FClassFinder<AActor>
 		TestShield(TEXT("/Script/Engine.Blueprint'/Game/Test/TestBlueprint/BP_TestShield.BP_TestShield_C'"));
-
 	if (TestShield.Succeeded())
 	{
 		mTestShield = TestShield.Class;
@@ -67,7 +65,6 @@ AMyCharacter::AMyCharacter()
 
 	static ConstructorHelpers::FClassFinder<AActor>
 		TestRollingBullet(TEXT("/Script/Engine.Blueprint'/Game/Test/TestBlueprint/BP_TestRollingBullet.BP_TestRollingBullet_C'"));
-
 	if (TestRollingBullet.Succeeded())
 	{
 		mTestRollingBullet = TestRollingBullet.Class;
@@ -158,12 +155,12 @@ void AMyCharacter::MoveAction(const FInputActionValue& Value)
 {
 	FVector Axis = Value.Get<FVector>();
 
-	if (GEngine)
-	{
-		// viewport에 원하는 문자열 출력
-		GEngine->AddOnScreenDebugMessage(-1, 0.1f, FColor::Blue,
-			FString::Printf(TEXT("X : %.1f Y : %1.f"), Axis.X, Axis.Y));
-	}
+	//if (GEngine)
+	//{
+	//	// viewport에 원하는 문자열 출력
+	//	GEngine->AddOnScreenDebugMessage(-1, 0.1f, FColor::Blue,
+	//		FString::Printf(TEXT("X : %.1f Y : %1.f"), Axis.X, Axis.Y));
+	//}
 
 	FVector dir = GetActorForwardVector() * Axis.X;
 	dir += GetActorRightVector() * Axis.Y;

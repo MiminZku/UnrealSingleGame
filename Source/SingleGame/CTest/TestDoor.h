@@ -63,5 +63,6 @@ protected:
 
 	float mRotateSpeed = 100.f;
 	EDoorState mState = EDoorState::Closed;
-	bool bDir = true;	// true : forward 방향으로 열림, false : 반대방향으로 열림
+	// true : forward 방향으로 열림, false : 반대방향으로 열림
+	bool bDir = true;	
 };

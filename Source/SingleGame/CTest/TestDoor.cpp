@@ -15,7 +15,6 @@ ATestDoor::ATestDoor()
 
 	static ConstructorHelpers::FObjectFinder<UStaticMesh>
 		MeshAsset(TEXT("/Script/Engine.StaticMesh'/Game/Test/TestMesh/Door.Door'"));
-
 	if (MeshAsset.Succeeded())
 	{
 		mMesh->SetStaticMesh(MeshAsset.Object);
