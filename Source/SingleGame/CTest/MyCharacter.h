@@ -29,6 +29,9 @@ public:
 	// Called to bind functionality to input
 	virtual void SetupPlayerInputComponent(class UInputComponent* PlayerInputComponent) override;
 
+public:
+	void SpawnShield();
+
 protected:
 	void MoveAction(const FInputActionValue& Value);
 	void RotateAction(const FInputActionValue& Value);
@@ -60,7 +63,7 @@ protected:
 	bool bCanSpawnShield = true;
 	int mShieldNum = 1;
 	int mMaxShieldNum = 8;
-	float mDistanceToShield = 200.f;
+	float mDistanceToShield = 150.f;
 	float mShieldTime = 0.f;
 	float mShieldCoolTime = 4.f;
 	float mShieldSpawnDegree = 0.f;

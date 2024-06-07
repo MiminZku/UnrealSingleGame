@@ -8,6 +8,9 @@
 #include "GameFramework/Actor.h"
 #include "TestMaze.generated.h"
 
+// must be odd number
+#define MAZE_LEN 11
+
 class ATestItem;
 
 UCLASS()
@@ -27,9 +30,12 @@ public:
 	// Called every frame
 	virtual void Tick(float DeltaTime) override;
 
+private:
+	void GenerateMaze(int32 x, int32 y, int32 dir); // dir => 0 : 위, 1 : 오른쪽, 2 : 아래, 3 : 왼쪽
+	void SelectItemLoc();
+
 protected:
-	void GenerateMaze();
-	void SpawnItem();
+	void SpawnMaze();
 
 public:
 	void DecreaseItem();
@@ -39,14 +45,13 @@ protected:
 	USceneComponent* mRoot;
 
 	UPROPERTY(EditAnywhere)
-	int32 mItemNum = 5;
+	int32 mItemNum = 8;
 
 	UPROPERTY(EditAnywhere)
 	ATestDoor* mExitDoor;
 
 	TSubclassOf<AActor> mWall;
-
-	int32 mMazeLen = 15;
 	
-	TArray<int32> mMaze;
+	int32 mMaze[MAZE_LEN][MAZE_LEN];	// 0: 길, 1 : 벽
+	TArray<int32> mItemCoords;
 };

@@ -17,7 +17,7 @@ ATestItem::ATestItem()
 	mMesh = CreateDefaultSubobject<UStaticMeshComponent>(TEXT("Mesh"));
 
 	static ConstructorHelpers::FObjectFinder<UStaticMesh>
-		MeshAsset(TEXT("/Script/Engine.StaticMesh'/Game/Test/TestMesh/Cube.Cube'"));
+		MeshAsset(TEXT("/Script/Engine.StaticMesh'/Game/Test/TestMesh/TestShieldMesh.TestShieldMesh'"));
 	if (MeshAsset.Succeeded())
 	{
 		mMesh->SetStaticMesh(MeshAsset.Object);
@@ -69,6 +69,7 @@ void ATestItem::CollisionBeginOverlap(UPrimitiveComponent* OverlappedComponent,
 			GameMode->AddScore(10);
 		}
 
+		Player->SpawnShield();
 		if (nullptr != mMaze)
 		{
 			mMaze->DecreaseItem();

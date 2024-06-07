@@ -70,7 +70,7 @@ AMyCharacter::AMyCharacter()
 		mTestRollingBullet = TestRollingBullet.Class;
 	}
 
-	GetCharacterMovement()->MaxWalkSpeed = 1200.f;
+	//GetCharacterMovement()->MaxWalkSpeed = 1200.f;
 
 	GetMesh()->SetCollisionEnabled(ECollisionEnabled::NoCollision);
 	GetCapsuleComponent()->SetCollisionProfileName(TEXT("Player"));
@@ -151,6 +151,51 @@ void AMyCharacter::SetupPlayerInputComponent(UInputComponent* PlayerInputCompone
 	}
 }
 
+void AMyCharacter::SpawnShield()
+{
+	if (false == bCanSpawnShield)	return;
+	bCanSpawnShield = false;
+
+	mShieldSpawnDegree = 0.f;
+	//mShieldRotationPivot->SetRelativeRotation(FRotator::ZeroRotator);
+
+	for (int32 i = 0; i < mShieldNum; ++i)
+	{
+		FVector loc = mShieldRotationPivot->GetComponentLocation();
+		loc += mShieldRotationPivot->GetForwardVector() *
+			mDistanceToShield * FMath::Cos(mShieldSpawnDegree * 3.141592f / 180.f);
+		loc += mShieldRotationPivot->GetRightVector() *
+			mDistanceToShield * FMath::Sin(mShieldSpawnDegree * 3.141592f / 180.f);
+
+		FRotator rot =
+			FRotator(0, mShieldSpawnDegree, 0) + mShieldRotationPivot->GetComponentRotation();
+
+		AActor* ShieldInstance =
+			//GetWorld()->SpawnActor<AActor>(
+			//	//mTestShield->GeneratedClass,
+			//	mTestShield,
+			//	loc, rot);
+
+			// Class이름::StaticClass() => UClass 정보를 꺼내온다.
+			GetWorld()->SpawnActor<ATestShield>(
+				ATestShield::StaticClass(), loc, rot);
+
+
+		ShieldInstance->AttachToComponent(mShieldRotationPivot,
+			//FAttachmentTransformRules(
+			//	EAttachmentRule::KeepWorld,
+			//	EAttachmentRule::KeepRelative,
+			//	EAttachmentRule::KeepRelative,
+			//	true)
+			FAttachmentTransformRules::KeepWorldTransform
+		);
+
+		mShieldSpawnDegree += 360.f / mShieldNum;
+	}
+	if (mShieldNum < mMaxShieldNum)	++mShieldNum;
+}
+
+
 void AMyCharacter::MoveAction(const FInputActionValue& Value)
 {
 	FVector Axis = Value.Get<FVector>();
@@ -217,44 +262,5 @@ void AMyCharacter::FireRollingAction(const FInputActionValue& Value)
 
 void AMyCharacter::ShieldAction(const FInputActionValue& Value)
 {
-	if (false == bCanSpawnShield)	return;
-	bCanSpawnShield = false;
-
-	mShieldSpawnDegree = 0.f;
-	//mShieldRotationPivot->SetRelativeRotation(FRotator::ZeroRotator);
-
-	for (int32 i = 0; i < mShieldNum; ++i)
-	{
-		FVector loc = mShieldRotationPivot->GetComponentLocation();
-		loc += mShieldRotationPivot->GetForwardVector() *
-			mDistanceToShield * FMath::Cos(mShieldSpawnDegree * 3.141592f / 180.f);
-		loc += mShieldRotationPivot->GetRightVector() *
-			mDistanceToShield * FMath::Sin(mShieldSpawnDegree * 3.141592f / 180.f);
-
-		FRotator rot =
-			FRotator(0, mShieldSpawnDegree, 0) + mShieldRotationPivot->GetComponentRotation();
-
-		AActor* ShieldInstance =
-			//GetWorld()->SpawnActor<AActor>(
-			//	//mTestShield->GeneratedClass,
-			//	mTestShield,
-			//	loc, rot);
-
-			// Class이름::StaticClass() => UClass 정보를 꺼내온다.
-			GetWorld()->SpawnActor<ATestShield>(
-				ATestShield::StaticClass(), loc, rot);
-
-
-		ShieldInstance->AttachToComponent(mShieldRotationPivot,
-			//FAttachmentTransformRules(
-			//	EAttachmentRule::KeepWorld,
-			//	EAttachmentRule::KeepRelative,
-			//	EAttachmentRule::KeepRelative,
-			//	true)
-			FAttachmentTransformRules::KeepWorldTransform
-		);
-
-		mShieldSpawnDegree += 360.f / mShieldNum;
-	}
-	if(mShieldNum < mMaxShieldNum)	++mShieldNum;
+	SpawnShield();
 }
