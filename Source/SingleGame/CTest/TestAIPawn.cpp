@@ -14,7 +14,7 @@ ATestAIPawn::ATestAIPawn()
 	mMovement = CreateDefaultSubobject<UFloatingPawnMovement>(TEXT("Movement"));
 
 	SetRootComponent(mCapsuleCollision);
-	mMesh->SetupAttachment(mMesh);
+	mMesh->SetupAttachment(mCapsuleCollision);
 	mMovement->SetUpdatedComponent(mCapsuleCollision);
 
 	static ConstructorHelpers::FObjectFinder<USkeletalMesh>
