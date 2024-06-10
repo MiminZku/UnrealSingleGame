@@ -24,6 +24,12 @@ public:
 	// Called every frame
 	virtual void Tick(float DeltaTime) override;
 
+	virtual float TakeDamage(
+		float DamageAmount,
+		struct FDamageEvent const& DamageEvent,
+		class AController* EventInstigator,
+		AActor* DamageCauser);
+
 	// AI는 입력받을 일이 없으므로 지움
 	// Called to bind functionality to input
 	//virtual void SetupPlayerInputComponent(class UInputComponent* PlayerInputComponent) override;
@@ -37,4 +43,6 @@ protected:
 
 	UPROPERTY(VisibleAnywhere)
 	UFloatingPawnMovement* mMovement;
+
+	float mHP = 100.f;
 };

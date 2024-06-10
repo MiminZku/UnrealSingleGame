@@ -6,6 +6,7 @@
 #include "EnhancedInputSubsystems.h"
 #include "InputData.h"
 #include "TestShield.h"
+#include "TestBullet.h"
 
 // Sets default values
 AMyCharacter::AMyCharacter()
@@ -230,24 +231,26 @@ void AMyCharacter::FireAction(const FInputActionValue& Value)
 		ESpawnActorCollisionHandlingMethod::Undefined;
 
 	// GetWorld()는 생성자에서 사용 X
-	GetWorld()->SpawnActor<AActor>(
-		//mTestBullet->GeneratedClass,
-		mTestBullet,
-		loc, GetActorRotation(), param);
+	//GetWorld()->SpawnActor<AActor>(
+	//	//mTestBullet->GeneratedClass,
+	//	mTestBullet,
+	//	loc, GetActorRotation(), param);
 
-	GetWorld()->SpawnActor<AActor>(
-		//mTestBullet->GeneratedClass,
-		mTestBullet,
+	GetWorld()->SpawnActor<ATestBullet>(
+		ATestBullet::StaticClass(),
+		loc, GetActorRotation(), param)->SetOwnerController(GetController());
+
+	GetWorld()->SpawnActor<ATestBullet>(
+		ATestBullet::StaticClass(),
 		loc + GetActorRightVector() * -75,
 		GetActorRotation() + FRotator(0, -15.f, 0),
-		param);
+		param)->SetOwnerController(GetController());
 
-	GetWorld()->SpawnActor<AActor>(
-		//mTestBullet->GeneratedClass,
-		mTestBullet,
+	GetWorld()->SpawnActor<ATestBullet>(
+		ATestBullet::StaticClass(),
 		loc + GetActorRightVector() * 75,
 		GetActorRotation() + FRotator(0, 15.f, 0),
-		param);
+		param)->SetOwnerController(GetController());
 }
 
 void AMyCharacter::FireRollingAction(const FInputActionValue& Value)

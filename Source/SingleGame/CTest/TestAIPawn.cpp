@@ -48,6 +48,28 @@ void ATestAIPawn::Tick(float DeltaTime)
 
 }
 
+float ATestAIPawn::TakeDamage(float DamageAmount, FDamageEvent const& DamageEvent,
+	AController* EventInstigator, AActor* DamageCauser)
+{
+	// bCanBeDamaged가 false일 경우 0 반환, true일 경우 Damage 반환
+	DamageAmount = Super::TakeDamage(DamageAmount, DamageEvent, EventInstigator, DamageCauser);
+
+	if (GEngine) GEngine->AddOnScreenDebugMessage(-1, 5.f, FColor::Red,
+		FString::Printf(TEXT("Damage : %.5f"), DamageAmount));
+
+	mHP -= DamageAmount; 
+	
+	if (GEngine) GEngine->AddOnScreenDebugMessage(-1, 5.f, FColor::Red,
+		FString::Printf(TEXT("HP : %.5f"), mHP));
+
+	if (mHP <= 0.f)
+	{
+		Destroy();
+	}
+
+	return DamageAmount;;
+}
+
 // Called to bind functionality to input
 //void ATestAIPawn::SetupPlayerInputComponent(UInputComponent* PlayerInputComponent)
 //{

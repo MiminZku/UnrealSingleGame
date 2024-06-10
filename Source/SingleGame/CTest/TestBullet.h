@@ -2,7 +2,8 @@
 
 #pragma once
 
-#include "CoreMinimal.h"
+#include "../GameInfo.h"
+#include "GameFramework/ProjectileMovementComponent.h"
 #include "GameFramework/Actor.h"
 #include "TestBullet.generated.h"
 
@@ -23,4 +24,36 @@ public:
 	// Called every frame
 	virtual void Tick(float DeltaTime) override;
 
+	void SetOwnerController(AController* Controller)
+	{
+		mOwnerController = Controller;
+	}
+
+	void SetDamage(float Damage)
+	{
+		mDamage = Damage;
+	}
+
+protected:
+	UFUNCTION()
+	void ProjectileHit(const FHitResult& HitResult);
+
+protected:
+	UPROPERTY(VisibleAnywhere)
+	UStaticMeshComponent* mMesh;
+
+	UPROPERTY(VisibleAnywhere)
+	USphereComponent* mSphereCollision;
+
+	UPROPERTY(VisibleAnywhere)
+	UProjectileMovementComponent* mMovement;
+
+	AController* mOwnerController;
+
+	float mDamage = 10.f;
+
+	float mSpeed = 2000.f;
+
+	// 최대 거리
+	float mDistance = 5000.f;
 };
