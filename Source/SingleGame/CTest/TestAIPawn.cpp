@@ -18,7 +18,7 @@ ATestAIPawn::ATestAIPawn()
 	mMovement->SetUpdatedComponent(mCapsuleCollision);
 
 	static ConstructorHelpers::FObjectFinder<USkeletalMesh>
-		MeshAsset(TEXT("/Script/Engine.SkeletalMesh'/Game/ParagonMinions/FX/SkeletalMeshes/Minion_Siege.Minion_Siege'"));
+		MeshAsset(TEXT("/Script/Engine.SkeletalMesh'/Game/ParagonMinions/Characters/Minions/Dusk_Minions/Meshes/Minion_Lane_Ranged_Dusk.Minion_Lane_Ranged_Dusk'"));
 	if (MeshAsset.Succeeded())
 	{
 		mMesh->SetSkeletalMeshAsset(MeshAsset.Object);
