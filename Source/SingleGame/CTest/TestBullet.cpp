@@ -20,7 +20,7 @@ ATestBullet::ATestBullet()
 
 	{
 		static ConstructorHelpers::FObjectFinder<UStaticMesh>
-			MeshAsset(TEXT("/Script/Engine.StaticMesh'/Engine/BasicShapes/Sphere.Sphere'"));
+			MeshAsset(TEXT("/Script/Engine.StaticMesh'/Game/Test/TestMesh/Sphere.Sphere'"));
 		if (MeshAsset.Succeeded())
 		{
 			mMesh->SetStaticMesh(MeshAsset.Object);

@@ -40,7 +40,7 @@ AMyCharacter::AMyCharacter()
 	mSpringArm->TargetArmLength = 600.f;
 	mSpringArm->bUsePawnControlRotation = true;
 
-	bUseControllerRotationYaw = true;
+	//bUseControllerRotationYaw = true;
 
 	//mTestBullet = LoadObject<UBlueprint>(nullptr,
 	//	TEXT("/Script/Engine.Blueprint'/Game/Test/TestBlueprint/BP_TestBullet.BP_TestBullet'"));
@@ -69,11 +69,18 @@ AMyCharacter::AMyCharacter()
 	{
 		mTestRollingBullet = TestRollingBullet.Class;
 	}
-
-	//GetCharacterMovement()->MaxWalkSpeed = 1200.f;
+	
+	static ConstructorHelpers::FClassFinder<UAnimInstance>
+		AnimClass(TEXT("/Script/Engine.AnimBlueprint'/Game/Test/TestAnimation/ABP_MyCharacter.ABP_MyCharacter_C'"));
+	if (AnimClass.Succeeded())
+	{
+		GetMesh()->SetAnimClass(AnimClass.Class);
+	}
 
 	GetMesh()->SetCollisionEnabled(ECollisionEnabled::NoCollision);
 	GetCapsuleComponent()->SetCollisionProfileName(TEXT("Player"));
+	
+	//GetCharacterMovement()->MaxWalkSpeed = 1200.f;
 }
 
 // Called when the game starts or when spawned
@@ -113,6 +120,13 @@ void AMyCharacter::Tick(float DeltaTime)
 	{
 		mShieldTime = 0;
 		bCanSpawnShield = true;
+	}
+
+	if (GEngine)
+	{
+	// viewport에 원하는 문자열 출력
+		GEngine->AddOnScreenDebugMessage(-1, 0.1f, FColor::Blue,
+		FString::Printf(TEXT("Velocity : %.1f"), GetVelocity().Size()));
 	}
 }
 
