@@ -18,15 +18,20 @@ ATestAIPawn::ATestAIPawn()
 	mMovement->SetUpdatedComponent(mCapsuleCollision);
 
 	static ConstructorHelpers::FObjectFinder<USkeletalMesh>
-		MeshAsset(TEXT("/Script/Engine.SkeletalMesh'/Game/ParagonKwang/Characters/Heroes/Kwang/Skins/Tier2/Kwang_Manban/Meshes/KwangManbun.KwangManbun'"));
+		MeshAsset(TEXT("/Script/Engine.SkeletalMesh'/Game/ParagonMinions/FX/SkeletalMeshes/Minion_Siege.Minion_Siege'"));
 	if (MeshAsset.Succeeded())
 	{
 		mMesh->SetSkeletalMeshAsset(MeshAsset.Object);
 	}
 
-	mCapsuleCollision->SetCapsuleHalfHeight(94.f);
-	mMesh->SetRelativeLocation(FVector(0.f, 0.f, -94.f));
+	mCapsuleCollision->SetCapsuleHalfHeight(85.f);
+	mCapsuleCollision->SetCapsuleRadius(40.f);
+	mCapsuleCollision->SetCollisionProfileName(TEXT("Monster"));
+
+	mMesh->SetRelativeLocation(FVector(0.f, 0.f, -85.f));
 	mMesh->SetRelativeRotation(FRotator(0.f, -90.f, 0.f));
+	mMesh->SetCollisionEnabled(ECollisionEnabled::NoCollision);
+
 }
 
 // Called when the game starts or when spawned

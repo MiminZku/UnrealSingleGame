@@ -25,7 +25,6 @@ AMyCharacter::AMyCharacter()
 
 	static ConstructorHelpers::FObjectFinder<USkeletalMesh>
 		MeshAsset(TEXT("/Script/Engine.SkeletalMesh'/Game/ParagonKwang/Characters/Heroes/Kwang/Skins/Tier2/Kwang_Manban/Meshes/KwangManbun.KwangManbun'"));
-
 	if (MeshAsset.Succeeded())
 	{
 		GetMesh()->SetSkeletalMeshAsset(MeshAsset.Object);
