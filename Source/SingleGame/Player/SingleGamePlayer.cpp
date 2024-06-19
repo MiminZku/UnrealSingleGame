@@ -5,6 +5,7 @@
 #include "EnhancedInputComponent.h"
 #include "EnhancedInputSubsystems.h"
 #include "../Input/DefaultInputData.h"
+#include "PlayerAnimInstance.h"
 
 // Sets default values
 ASingleGamePlayer::ASingleGamePlayer()
@@ -86,9 +87,10 @@ void ASingleGamePlayer::MoveAction(const FInputActionValue& Value)
 
 	FVector dir = GetActorForwardVector() * Axis.X;
 	dir += GetActorRightVector() * Axis.Y;
-	dir += GetActorUpVector() * Axis.Z;
 
 	AddMovementInput(dir, 1.f);
+
+	mAnimInstance->SetMoveDir(dir);
 }
 
 void ASingleGamePlayer::RotateAction(const FInputActionValue& Value)

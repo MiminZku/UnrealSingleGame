@@ -7,6 +7,8 @@
 #include "GameFramework/Character.h"
 #include "SingleGamePlayer.generated.h"
 
+class UPlayerAnimInstance;
+
 UCLASS()
 class SINGLEGAME_API ASingleGamePlayer : public ACharacter
 {
@@ -39,4 +41,6 @@ protected:
 
 	UPROPERTY(VisibleAnywhere)
 	UCameraComponent* mCamera;
+
+	TObjectPtr<class UPlayerAnimInstance> mAnimInstance;
 };

@@ -2,6 +2,7 @@
 
 
 #include "KnightCharacter.h"
+#include "PlayerAnimInstance.h"
 
 AKnightCharacter::AKnightCharacter()
 {
@@ -25,13 +26,16 @@ AKnightCharacter::AKnightCharacter()
 		AnimClass(TEXT("/Script/Engine.AnimBlueprint'/Game/_Player/Knight/ABP_Knight.ABP_Knight_C'"));
 	if (AnimClass.Succeeded())
 	{
-		GetMesh()->SetAnimClass(AnimClass.Class);
+		GetMesh()->SetAnimInstanceClass(AnimClass.Class);
 	}
+
 }
 
 void AKnightCharacter::BeginPlay()
 {
 	Super::BeginPlay();
+
+	mAnimInstance = Cast<UPlayerAnimInstance>(GetMesh()->GetAnimInstance());
 }
 
 void AKnightCharacter::Tick(float DeltaTime)
