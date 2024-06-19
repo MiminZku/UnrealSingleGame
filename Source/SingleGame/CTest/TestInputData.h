@@ -7,7 +7,7 @@
 #include "InputAction.h"
 
 #include "UObject/NoExportTypes.h"
-#include "InputData.generated.h"
+#include "TestInputData.generated.h"
 
 /**
  *

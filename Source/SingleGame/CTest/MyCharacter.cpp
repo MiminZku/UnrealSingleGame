@@ -4,7 +4,7 @@
 #include "MyCharacter.h"
 #include "EnhancedInputComponent.h"
 #include "EnhancedInputSubsystems.h"
-#include "InputData.h"
+#include "TestInputData.h"
 #include "TestShield.h"
 #include "TestBullet.h"
 
@@ -34,6 +34,7 @@ AMyCharacter::AMyCharacter()
 	GetCapsuleComponent()->SetCapsuleHalfHeight(94.f);
 	GetMesh()->SetRelativeLocation(FVector(0.f, 0.f, -94.f));
 	GetMesh()->SetRelativeRotation(FRotator(0.f, -90.f, 0.f));
+	GetMesh()->SetCollisionEnabled(ECollisionEnabled::NoCollision);
 
 	mSpringArm->SetRelativeLocation(FVector(0.f, 0.f, 70.f));
 	mSpringArm->SetRelativeRotation(FRotator(-20.f, 0.f, 0.f));
