@@ -19,6 +19,15 @@ ASingleGamePlayer::ASingleGamePlayer()
 	mSpringArm->SetupAttachment(RootComponent);
 	mCamera->SetupAttachment(mSpringArm);
 
+	mSpringArm->SetRelativeLocation(FVector(0.f, 0.f, 70.f));
+	mSpringArm->SetRelativeRotation(FRotator(-20.f, 0.f, 0.f));
+	mSpringArm->TargetArmLength = 600.f;
+	mSpringArm->bUsePawnControlRotation = true;
+	
+	bUseControllerRotationYaw = false;
+	
+	GetCharacterMovement()->bOrientRotationToMovement = true;
+
 	GetMesh()->SetCollisionEnabled(ECollisionEnabled::NoCollision);
 	GetCapsuleComponent()->SetCollisionProfileName(TEXT("Player"));
 }
@@ -27,6 +36,8 @@ ASingleGamePlayer::ASingleGamePlayer()
 void ASingleGamePlayer::BeginPlay()
 {
 	Super::BeginPlay();
+
+	mCameraRotator = mSpringArm->GetRelativeRotation();
 
 	APlayerController* PlayerController =
 		Cast<APlayerController>(GetController());
@@ -84,9 +95,9 @@ void ASingleGamePlayer::SetupPlayerInputComponent(UInputComponent* PlayerInputCo
 void ASingleGamePlayer::MoveAction(const FInputActionValue& Value)
 {
 	FVector Axis = Value.Get<FVector>();
-
-	FVector dir = GetActorForwardVector() * Axis.X;
-	dir += GetActorRightVector() * Axis.Y;
+	FVector front = FRotator(0, GetBaseAimRotation().Yaw, 0).Vector(); front.Z = 0;
+	FVector right = FRotator(0, GetBaseAimRotation().Yaw + 90, 0).Vector();; right.Z = 0;
+	FVector dir = front * Axis.X + right * Axis.Y;
 
 	AddMovementInput(dir, 1.f);
 
@@ -97,24 +108,35 @@ void ASingleGamePlayer::RotateAction(const FInputActionValue& Value)
 {
 	FVector2D Axis2D = Value.Get<FVector2D>();
 
-	AddControllerYawInput(Axis2D.X);
-	AddControllerPitchInput(-Axis2D.Y);
+	float PitchDelta = -Axis2D.Y * mCameraRotateSpeed * GetWorld()->GetDeltaSeconds();
+	float YawDelta = Axis2D.X * mCameraRotateSpeed * GetWorld()->GetDeltaSeconds();
+
+	AddControllerPitchInput(PitchDelta);
+	AddControllerYawInput(YawDelta);
+	
+	//mCameraRotator.Pitch += PitchDelta;
+	//mCameraRotator.Yaw += YawDelta;
+
+	//if (mCameraRotator.Pitch > 90)	mCameraRotator.Pitch = 90.f;
+	//else if (mCameraRotator.Pitch < -90) mCameraRotator.Pitch = -90.f;
+
+	//if (mCameraRotator.Yaw > 180)	mCameraRotator.Yaw += 360.f;
+	//else if (mCameraRotator.Yaw < -180) mCameraRotator.Yaw -= 360.f;
+	//
+	//mAnimInstance->SetHeadRotation(mCameraRotator.Pitch, mCameraRotator.Yaw);
 }
 
 void ASingleGamePlayer::JumpAction(const FInputActionValue& Value)
 {
-	if (GEngine)
-	{
-		// viewport에 원하는 문자열 출력
-		GEngine->AddOnScreenDebugMessage(-1, 1, FColor::Blue, TEXT("Jump"));
-	}
+
 }
 
 void ASingleGamePlayer::AttackAction(const FInputActionValue& Value)
 {
-	if (GEngine)
-	{
-		// viewport에 원하는 문자열 출력
-		GEngine->AddOnScreenDebugMessage(-1, 1, FColor::Blue, TEXT("Attack"));
-	}
+	NormalAttack();
 }
+
+void ASingleGamePlayer::NormalAttack()
+{
+}
+

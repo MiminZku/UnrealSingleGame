@@ -35,6 +35,8 @@ protected:
 	void JumpAction(const FInputActionValue& Value);
 	void AttackAction(const FInputActionValue& Value);
 
+	virtual void NormalAttack();
+
 protected:
 	UPROPERTY(VisibleAnywhere)
 	USpringArmComponent* mSpringArm;
@@ -43,4 +45,8 @@ protected:
 	UCameraComponent* mCamera;
 
 	TObjectPtr<class UPlayerAnimInstance> mAnimInstance;
+
+	float mCameraRotateSpeed = 90.f;
+
+	FRotator mCameraRotator = FRotator::ZeroRotator;
 };

@@ -17,11 +17,6 @@ AKnightCharacter::AKnightCharacter()
 	GetMesh()->SetRelativeLocation(FVector(0.f, 0.f, -94.f));
 	GetMesh()->SetRelativeRotation(FRotator(0.f, -90.f, 0.f));
 
-	mSpringArm->SetRelativeLocation(FVector(0.f, 0.f, 70.f));
-	mSpringArm->SetRelativeRotation(FRotator(-20.f, 0.f, 0.f));
-	mSpringArm->TargetArmLength = 600.f;
-	mSpringArm->bUsePawnControlRotation = true;
-
 	static ConstructorHelpers::FClassFinder<UAnimInstance>
 		AnimClass(TEXT("/Script/Engine.AnimBlueprint'/Game/_Player/Knight/ABP_Knight.ABP_Knight_C'"));
 	if (AnimClass.Succeeded())
@@ -46,4 +41,9 @@ void AKnightCharacter::Tick(float DeltaTime)
 void AKnightCharacter::SetupPlayerInputComponent(UInputComponent* PlayerInputComponent)
 {
 	Super::SetupPlayerInputComponent(PlayerInputComponent);
+}
+
+void AKnightCharacter::NormalAttack()
+{
+	mAnimInstance->PlayAttackMontage();
 }

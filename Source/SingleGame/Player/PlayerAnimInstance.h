@@ -24,6 +24,23 @@ public:
 	virtual void NativeBeginPlay();
 
 	void SetMoveDir(const FVector& ActionValue);
+	
+	void SetHeadRotation(const float& Pitch, const float& Yaw)
+	{
+		mIdleAOPitch = Pitch;
+		mIdleAOYaw = Yaw;
+	}
+
+	void PlayAttackMontage();
+	void PlayAttackRecoveryMontage();
+
+	UFUNCTION()	// 노티파이 함수들은 무조건 UFUNCTION, void
+	void AnimNotify_AttackCombo();	// 이름 정해진 대로 ( AnimNotify_Notify이름() )
+
+	// bInterrupted : 끝나기 전에 다른 몽타주 재생되면 true
+	UFUNCTION()
+	void MontageEnd(UAnimMontage* Montage, bool bInterrupted);
+
 
 protected:
 	UPROPERTY(VisibleAnywhere, BlueprintReadOnly)
@@ -37,4 +54,25 @@ protected:
 
 	UPROPERTY(VisibleAnywhere, BlueprintReadOnly)
 	bool bIsAir = false;
+
+	UPROPERTY(VisibleAnywhere, BlueprintReadOnly)
+	float mIdleAOPitch = 0.f;
+
+	UPROPERTY(VisibleAnywhere, BlueprintReadOnly)
+	float mIdleAOYaw = 0.f;
+
+	UPROPERTY(EditAnywhere, BlueprintReadOnly)
+	TObjectPtr<UAnimMontage> mAttackMontage;
+
+	UPROPERTY(EditAnywhere, BlueprintReadOnly)
+	TObjectPtr<UAnimMontage> mAttackRecoveryMontage;
+
+	UPROPERTY(EditAnywhere, BlueprintReadOnly)
+	TArray<FName> mAttackSectionName;
+
+	UPROPERTY(EditAnywhere, BlueprintReadOnly)
+	int32 mCurrentAttackSection = 0;
+
+	bool mAttackCombo = false;
+	bool mAttackState = false;
 };

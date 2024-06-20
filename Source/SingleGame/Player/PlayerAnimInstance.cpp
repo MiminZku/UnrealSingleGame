@@ -28,6 +28,9 @@ void UPlayerAnimInstance::NativeUpdateAnimation(float DeltaSeconds)
 
 			bIsAir = Movement->IsFalling();
 		}
+
+		mIdleAOPitch = Player->GetBaseAimRotation().Pitch;
+		mIdleAOYaw = Player->GetBaseAimRotation().Yaw;
 	}
 
 
@@ -51,6 +54,8 @@ void UPlayerAnimInstance::NativeUninitializeAnimation()
 void UPlayerAnimInstance::NativeBeginPlay()
 {
 	Super::NativeBeginPlay();
+
+	OnMontageEnded.AddDynamic(this, &UPlayerAnimInstance::MontageEnd);
 }
 
 void UPlayerAnimInstance::SetMoveDir(const FVector& ActionValue)
@@ -65,4 +70,69 @@ void UPlayerAnimInstance::SetMoveDir(const FVector& ActionValue)
 
 
 	mMoveDir = ActionValue.Y * 90 * (1 - ActionValue.X * 0.5f);
+}
+
+void UPlayerAnimInstance::PlayAttackMontage()
+{
+	if (!IsValid(mAttackMontage)) return;
+
+	// 몽타주가 이미 재생 중이지 않을 때만 재생
+	if (!mAttackState)
+	{
+		if (!Montage_IsPlaying(mAttackMontage))
+		{
+			Montage_Play(mAttackMontage, 1.f/*재생 속도*/);
+			Montage_JumpToSection(mAttackSectionName[mCurrentAttackSection]);
+		}
+	}
+
+	else
+		mAttackCombo = true;
+
+	mAttackState = true;
+}
+
+void UPlayerAnimInstance::PlayAttackRecoveryMontage()
+{
+	Montage_Play(mAttackRecoveryMontage);
+	Montage_JumpToSection(mAttackSectionName[mCurrentAttackSection]);
+}
+
+void UPlayerAnimInstance::AnimNotify_AttackCombo()
+{
+	// Combo 타이밍전에 공격키 눌렀다면
+	if (mAttackCombo)
+	{
+		++mCurrentAttackSection;
+		mCurrentAttackSection %= mAttackSectionName.Num();
+
+		Montage_Play(mAttackMontage);
+		Montage_JumpToSection(mAttackSectionName[mCurrentAttackSection]);
+
+		mAttackCombo = false;
+	}
+}
+
+void UPlayerAnimInstance::MontageEnd(UAnimMontage* Montage, bool bInterrupted)
+{
+	if (Montage == mAttackMontage && !bInterrupted)
+	{
+		mAttackCombo = false;
+		mAttackState = false;
+		mCurrentAttackSection = 0;
+
+		if (mCurrentAttackSection != mAttackSectionName.Num() - 1)
+		{
+			PlayAttackRecoveryMontage();
+		}
+		else
+		{
+		}
+	}
+	else if (Montage == mAttackRecoveryMontage)
+	{
+		mAttackCombo = false;
+		mAttackState = false;
+		mCurrentAttackSection = 0;
+	}
 }
