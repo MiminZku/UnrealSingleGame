@@ -31,4 +31,29 @@ public:
 
 protected:
 	virtual void NormalAttack() override;
+
+public:
+	virtual void AttackEnable() override;
+	virtual void AttackDisable() override;
+
+protected:
+	UFUNCTION()
+	void SwordBeginOverlap(
+		UPrimitiveComponent* OverlappedComponent,
+		AActor* OtherActor,
+		UPrimitiveComponent* OtherComp,
+		int32 OtherBodyIndex,
+		bool bFromSweep,
+		const FHitResult& SweepResult);
+
+	UFUNCTION()
+	void SwordEndOverlap(
+		UPrimitiveComponent* OverlappedComponent,
+		AActor* OtherActor,
+		UPrimitiveComponent* OtherComp,
+		int32 OtherBodyIndex);
+
+protected:
+	UPROPERTY(VisibleAnywhere)
+	UBoxComponent* mSwordCollisionBox;
 };

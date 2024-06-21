@@ -14,7 +14,6 @@ class SINGLEGAME_API UPlayerAnimInstance : public UAnimInstance
 {
 	GENERATED_BODY()
 
-
 public:
 	virtual void NativeInitializeAnimation();
 	virtual void NativeUpdateAnimation(float DeltaSeconds);
@@ -36,6 +35,12 @@ public:
 
 	UFUNCTION()	// 노티파이 함수들은 무조건 UFUNCTION, void
 	void AnimNotify_AttackCombo();	// 이름 정해진 대로 ( AnimNotify_Notify이름() )
+
+	UFUNCTION()	
+	void AnimNotify_AttackEnable();
+
+	UFUNCTION()	
+	void AnimNotify_AttackDisable();
 
 	// bInterrupted : 끝나기 전에 다른 몽타주 재생되면 true
 	UFUNCTION()

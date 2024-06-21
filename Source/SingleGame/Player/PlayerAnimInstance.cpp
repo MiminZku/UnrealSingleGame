@@ -30,7 +30,7 @@ void UPlayerAnimInstance::NativeUpdateAnimation(float DeltaSeconds)
 		}
 
 		mIdleAOPitch = Player->GetBaseAimRotation().Pitch;
-		mIdleAOYaw = Player->GetBaseAimRotation().Yaw;
+		mIdleAOYaw = Player->GetBaseAimRotation().Yaw;		
 	}
 
 
@@ -100,7 +100,7 @@ void UPlayerAnimInstance::PlayAttackRecoveryMontage()
 
 void UPlayerAnimInstance::AnimNotify_AttackCombo()
 {
-	// Combo 타이밍전에 공격키 눌렀다면
+	// Combo 타이밍에 공격키 눌렀다면
 	if (mAttackCombo)
 	{
 		++mCurrentAttackSection;
@@ -110,6 +110,26 @@ void UPlayerAnimInstance::AnimNotify_AttackCombo()
 		Montage_JumpToSection(mAttackSectionName[mCurrentAttackSection]);
 
 		mAttackCombo = false;
+	}
+}
+
+void UPlayerAnimInstance::AnimNotify_AttackEnable()
+{
+	ASingleGamePlayer* Player = Cast<ASingleGamePlayer>(TryGetPawnOwner());
+
+	if (IsValid(Player))
+	{
+		Player->AttackEnable();
+	}
+}
+
+void UPlayerAnimInstance::AnimNotify_AttackDisable()
+{
+	ASingleGamePlayer* Player = Cast<ASingleGamePlayer>(TryGetPawnOwner());
+
+	if (IsValid(Player))
+	{
+		Player->AttackDisable();
 	}
 }
 

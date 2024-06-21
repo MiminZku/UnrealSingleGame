@@ -37,6 +37,10 @@ protected:
 
 	virtual void NormalAttack();
 
+public:
+	virtual void AttackEnable();
+	virtual void AttackDisable();
+
 protected:
 	UPROPERTY(VisibleAnywhere)
 	USpringArmComponent* mSpringArm;
@@ -49,4 +53,7 @@ protected:
 	float mCameraRotateSpeed = 90.f;
 
 	FRotator mCameraRotator = FRotator::ZeroRotator;
+
+	UPROPERTY(EditAnywhere)
+	UParticleSystem* mNormalAttackHitParticle;
 };

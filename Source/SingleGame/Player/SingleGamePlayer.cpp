@@ -140,3 +140,11 @@ void ASingleGamePlayer::NormalAttack()
 {
 }
 
+void ASingleGamePlayer::AttackEnable()
+{
+}
+
+void ASingleGamePlayer::AttackDisable()
+{
+}
+
