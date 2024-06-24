@@ -36,6 +36,9 @@ public:
 	virtual void AttackEnable() override;
 	virtual void AttackDisable() override;
 
+	void SetCombo(int32 Num) { mCombo = Num; }
+	int32 GetCombo() { return mCombo; }
+
 protected:
 	UFUNCTION()
 	void SwordBeginOverlap(
@@ -56,4 +59,7 @@ protected:
 protected:
 	UPROPERTY(VisibleAnywhere)
 	UBoxComponent* mSwordCollisionBox;
+
+	UPROPERTY(VisibleAnywhere)
+	int32 mCombo = 0;
 };

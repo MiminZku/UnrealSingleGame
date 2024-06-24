@@ -63,12 +63,13 @@ void AKnightCharacter::SetupPlayerInputComponent(UInputComponent* PlayerInputCom
 
 void AKnightCharacter::NormalAttack()
 {
-	mAnimInstance->PlayAttackMontage();
+	mAnimInstance->PlayAttackMontage(mCombo);
 }
 
 void AKnightCharacter::AttackEnable()
 {
 	mSwordCollisionBox->SetCollisionEnabled(ECollisionEnabled::QueryOnly);
+
 	FVector Start = GetActorLocation() + GetActorForwardVector() * 50.f;
 	FVector End = Start + GetActorForwardVector() * 200.f;
 
