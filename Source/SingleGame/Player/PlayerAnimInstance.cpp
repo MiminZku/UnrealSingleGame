@@ -118,6 +118,12 @@ void UPlayerAnimInstance::PlayAttackRecoveryMontage(int32 Combo)
 	Montage_JumpToSection(mAttackSectionName[Combo]);
 }
 
+void UPlayerAnimInstance::OnJump()
+{
+	bJump = true;
+
+}
+
 void UPlayerAnimInstance::AnimNotify_AttackCombo()
 {
 	// Combo 타이밍에 공격키 눌렀다면

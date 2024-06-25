@@ -33,10 +33,7 @@ public:
 	void PlayAttackMontage(int32& Combo);
 	void PlayAttackRecoveryMontage(int32 Combo);
 
-	void OnJump()
-	{
-		bJump = true;
-	}
+	void OnJump();
 
 	UFUNCTION()	// 노티파이 함수들은 무조건 UFUNCTION, void
 	void AnimNotify_AttackCombo();	// 이름 정해진 대로 ( AnimNotify_Notify이름() )
