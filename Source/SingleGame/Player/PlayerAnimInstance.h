@@ -33,6 +33,11 @@ public:
 	void PlayAttackMontage(int32& Combo);
 	void PlayAttackRecoveryMontage(int32 Combo);
 
+	void OnJump()
+	{
+		bJump = true;
+	}
+
 	UFUNCTION()	// 노티파이 함수들은 무조건 UFUNCTION, void
 	void AnimNotify_AttackCombo();	// 이름 정해진 대로 ( AnimNotify_Notify이름() )
 
@@ -61,6 +66,9 @@ protected:
 	bool bIsAir = false;
 
 	UPROPERTY(VisibleAnywhere, BlueprintReadOnly)
+	bool bJump = false;
+
+	UPROPERTY(VisibleAnywhere, BlueprintReadOnly)
 	float mIdleAOPitch = 0.f;
 
 	UPROPERTY(VisibleAnywhere, BlueprintReadOnly)
@@ -74,6 +82,9 @@ protected:
 
 	UPROPERTY(EditAnywhere, BlueprintReadOnly)
 	TArray<FName> mAttackSectionName;
+
+	UPROPERTY(EditAnywhere, BlueprintReadOnly)
+	FName mAttackAirSectionName;
 
 	UPROPERTY(EditAnywhere, BlueprintReadOnly)
 	int32 mCurrentAttackSection = 0;

@@ -28,6 +28,8 @@ void UPlayerAnimInstance::NativeUpdateAnimation(float DeltaSeconds)
 			bAcceleration = Movement->GetCurrentAcceleration().Length() > 0.f;
 
 			bIsAir = Movement->IsFalling();
+
+			if (!bIsAir)	bJump = false;
 		}
 
 		mIdleAOPitch = Player->GetBaseAimRotation().Pitch;
@@ -73,7 +75,7 @@ void UPlayerAnimInstance::SetMoveDir(const FVector& ActionValue)
 	mMoveDir = ActionValue.Y * 90 * (1 - ActionValue.X * 0.5f);
 }
 
-void UPlayerAnimInstance::PlayAttackMontage(int& Combo)
+void UPlayerAnimInstance::PlayAttackMontage(int32& Combo)
 {
 	if (!IsValid(mAttackMontage)) return;
 
@@ -90,6 +92,12 @@ void UPlayerAnimInstance::PlayAttackMontage(int& Combo)
 	//	mAttackCombo = true;
 	//mAttackState = true;
 
+	if (bIsAir)
+	{
+		Montage_Play(mAttackMontage, 1.f/*犁积 加档*/);
+		Montage_JumpToSection(mAttackAirSectionName);
+		return;
+	}
 	if (Montage_IsPlaying(mAttackMontage) || Montage_IsPlaying(mAttackRecoveryMontage))
 	{
 		++Combo;
@@ -97,11 +105,11 @@ void UPlayerAnimInstance::PlayAttackMontage(int& Combo)
 	}
 	Montage_Play(mAttackMontage, 1.f/*犁积 加档*/);
 	Montage_JumpToSection(mAttackSectionName[Combo]);
-	if (GEngine)
-	{
-		GEngine->AddOnScreenDebugMessage(-1,
-			1.f, FColor::Blue, FString::Printf(TEXT("%d"), Combo));
-	}
+	//if (GEngine)
+	//{
+	//	GEngine->AddOnScreenDebugMessage(-1,
+	//		1.f, FColor::Blue, FString::Printf(TEXT("%d"), Combo));
+	//}
 }
 
 void UPlayerAnimInstance::PlayAttackRecoveryMontage(int32 Combo)
@@ -138,7 +146,7 @@ void UPlayerAnimInstance::AnimNotify_AttackEnable()
 void UPlayerAnimInstance::AnimNotify_AttackDisable()
 {
 	ASingleGamePlayer* Player = Cast<ASingleGamePlayer>(TryGetPawnOwner());
-
+	                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                   
 	if (IsValid(Player))
 	{
 		Player->AttackDisable();

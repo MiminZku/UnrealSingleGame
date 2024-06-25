@@ -128,7 +128,12 @@ void ASingleGamePlayer::RotateAction(const FInputActionValue& Value)
 
 void ASingleGamePlayer::JumpAction(const FInputActionValue& Value)
 {
-
+	// 기본 캐릭터 클래스에서 지원
+	if (CanJump())
+	{
+		mAnimInstance->OnJump();
+		Jump();
+	}
 }
 
 void ASingleGamePlayer::AttackAction(const FInputActionValue& Value)
