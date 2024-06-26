@@ -9,6 +9,7 @@
 /**
  * 
  */
+
 UCLASS()
 class SINGLEGAME_API AKnightCharacter : public ASingleGamePlayer
 {

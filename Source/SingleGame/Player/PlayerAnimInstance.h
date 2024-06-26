@@ -9,6 +9,7 @@
 /**
  * 
  */
+
 UCLASS()
 class SINGLEGAME_API UPlayerAnimInstance : public UAnimInstance
 {
@@ -48,7 +49,6 @@ public:
 	UFUNCTION()
 	void MontageEnd(UAnimMontage* Montage, bool bInterrupted);
 
-
 protected:
 	UPROPERTY(VisibleAnywhere, BlueprintReadOnly)
 	float mMoveSpeed = 0.f;
@@ -83,9 +83,39 @@ protected:
 	UPROPERTY(EditAnywhere, BlueprintReadOnly)
 	FName mAttackAirSectionName;
 
-	UPROPERTY(EditAnywhere, BlueprintReadOnly)
-	int32 mCurrentAttackSection = 0;
+	//UPROPERTY(EditAnywhere, BlueprintReadOnly)
+	//int32 mCurrentAttackSection = 0;
 
 	bool mAttackCombo = false;
 	bool mAttackState = false;
+
+	//UPROPERTY(EditAnywhere, BlueprintReadOnly)
+	//TMap<FString, UAnimSequence*> mSequenceMap;
+
+	//UPROPERTY(EditAnywhere, BlueprintReadOnly)
+	//TMap<FString, UBlendSpace*> mBlendSpaceMap;
+
+	UPROPERTY(EditAnywhere, BlueprintReadOnly)
+	UAnimSequence* mIdle;
+
+	UPROPERTY(EditAnywhere, BlueprintReadOnly)
+	UAnimSequence* mJogStart;
+
+	UPROPERTY(EditAnywhere, BlueprintReadOnly)
+	UAnimSequence* mJog;
+
+	UPROPERTY(EditAnywhere, BlueprintReadOnly)
+	UAnimSequence* mJogStop;
+
+	UPROPERTY(EditAnywhere, BlueprintReadOnly)
+	UAnimSequence* mJumpStart;
+
+	UPROPERTY(EditAnywhere, BlueprintReadOnly)
+	UAnimSequence* mJumpApex;
+
+	UPROPERTY(EditAnywhere, BlueprintReadOnly)
+	UAnimSequence* mJumpLand;
+
+	UPROPERTY(EditAnywhere, BlueprintReadOnly)
+	UAnimSequence* mJumpRecovery;
 };

@@ -63,13 +63,11 @@ void UPlayerAnimInstance::NativeBeginPlay()
 
 void UPlayerAnimInstance::SetMoveDir(const FVector& ActionValue)
 {
-	mMoveDir = 0.f;
-
-	// 좌우
-	ActionValue.Y;	// 1 이면 90, -1 이면 -90
-
-	// 전후
-	ActionValue.X; //1 이면 0.5 곱하고, -1 이면 1.5 곱하기
+	//// 좌우
+	//ActionValue.Y;	// 1 이면 90, -1 이면 -90
+	//
+	//// 전후
+	//ActionValue.X; //1 이면 0.5 곱하고, -1 이면 1.5 곱하기
 
 
 	mMoveDir = ActionValue.Y * 90 * (1 - ActionValue.X * 0.5f);
@@ -121,22 +119,32 @@ void UPlayerAnimInstance::PlayAttackRecoveryMontage(int32 Combo)
 void UPlayerAnimInstance::OnJump()
 {
 	bJump = true;
+	if (Montage_IsPlaying(mAttackMontage))
+	{
+		Montage_Stop(0.1f, mAttackMontage);
 
+		AKnightCharacter* Player = Cast<AKnightCharacter>(TryGetPawnOwner());
+
+		if (IsValid(Player))
+		{
+			Player->SetCombo(0);
+		}
+	}
 }
 
 void UPlayerAnimInstance::AnimNotify_AttackCombo()
 {
-	// Combo 타이밍에 공격키 눌렀다면
-	if (mAttackCombo)
-	{
-		++mCurrentAttackSection;
-		mCurrentAttackSection %= mAttackSectionName.Num();
+	//// Combo 타이밍에 공격키 눌렀다면
+	//if (mAttackCombo)
+	//{
+	//	++mCurrentAttackSection;
+	//	mCurrentAttackSection %= mAttackSectionName.Num();
 
-		Montage_Play(mAttackMontage);
-		Montage_JumpToSection(mAttackSectionName[mCurrentAttackSection]);
+	//	Montage_Play(mAttackMontage);
+	//	Montage_JumpToSection(mAttackSectionName[mCurrentAttackSection]);
 
-		mAttackCombo = false;
-	}
+	//	mAttackCombo = false;
+	//}
 }
 
 void UPlayerAnimInstance::AnimNotify_AttackEnable()

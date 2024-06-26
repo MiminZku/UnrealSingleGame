@@ -18,7 +18,7 @@ AKnightCharacter::AKnightCharacter()
 	GetMesh()->SetRelativeRotation(FRotator(0.f, -90.f, 0.f));
 
 	static ConstructorHelpers::FClassFinder<UAnimInstance>
-		AnimClass(TEXT("/Script/Engine.AnimBlueprint'/Game/_Player/Knight/ABP_Knight.ABP_Knight_C'"));
+		AnimClass(TEXT("/Script/Engine.AnimBlueprint'/Game/_Player/Knight/ABP_Kwang_TemplateLink.ABP_Kwang_TemplateLink_C'"));
 	if (AnimClass.Succeeded())
 	{
 		GetMesh()->SetAnimInstanceClass(AnimClass.Class);
