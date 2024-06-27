@@ -10,6 +10,13 @@
  * 
  */
 
+UENUM(BlueprintType)
+enum class EPlayerAnimType : uint8
+{
+	Locomotion,
+	Death,
+};
+
 UCLASS()
 class SINGLEGAME_API UPlayerAnimInstance : public UAnimInstance
 {
@@ -48,6 +55,8 @@ public:
 	// bInterrupted : 끝나기 전에 다른 몽타주 재생되면 true
 	UFUNCTION()
 	void MontageEnd(UAnimMontage* Montage, bool bInterrupted);
+
+	void SetAnimType(EPlayerAnimType Type) { mAnimType = Type; }
 
 protected:
 	UPROPERTY(VisibleAnywhere, BlueprintReadOnly)
@@ -88,6 +97,9 @@ protected:
 
 	bool mAttackCombo = false;
 	bool mAttackState = false;
+
+	UPROPERTY(VisibleAnywhere, BlueprintReadOnly)
+	EPlayerAnimType mAnimType = EPlayerAnimType::Locomotion;
 
 	//UPROPERTY(EditAnywhere, BlueprintReadOnly)
 	//TMap<FString, UAnimSequence*> mSequenceMap;

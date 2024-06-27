@@ -15,6 +15,9 @@ class SINGLEGAME_API UPlayerLocomotionTemplate : public UAnimInstance
 	GENERATED_BODY()
 
 public:
+	UFUNCTION(BlueprintCallable, Category = "Test")
+	UAnimSequence* GetAnimSequence(const FString& Name);
+
 	void SetIdleAnimation(UAnimSequence* Animation) { mIdle = Animation; }
 
 protected:

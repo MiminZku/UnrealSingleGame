@@ -2,3 +2,8 @@
 
 
 #include "PlayerLocomotionTemplate.h"
+
+UAnimSequence* UPlayerLocomotionTemplate::GetAnimSequence(const FString& Name)
+{
+    return nullptr;
+}
