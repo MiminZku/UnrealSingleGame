@@ -6,6 +6,8 @@
 #include "GameFramework/Pawn.h"
 #include "AIPawn.generated.h"
 
+DECLARE_MULTICAST_DELEGATE(FAIDeathDelegate);
+
 UCLASS()
 class SINGLEGAME_API AAIPawn : public APawn
 {
@@ -18,13 +20,25 @@ public:
 protected:
 	// Called when the game starts or when spawned
 	virtual void BeginPlay() override;
+	virtual void EndPlay(const EEndPlayReason::Type EndPlayReason);
+	virtual float TakeDamage(
+		float DamageAmount,
+		struct FDamageEvent const& DamageEvent,
+		class AController* EventInstigator,
+		AActor* DamageCauser);
 
 public:	
 	// Called every frame
 	virtual void Tick(float DeltaTime) override;
 
-	// Called to bind functionality to input
-	virtual void SetupPlayerInputComponent(class UInputComponent* PlayerInputComponent) override;
+	UCapsuleComponent* GetCapsule() const { return mCapsule; }
+
+	template <typename T>
+	void AddDeathDelegate(T* Object, void(T::* Func)())
+	{
+		mDeathDelegate.AddUObject(Object, Func);
+	}
+
 
 protected:
 	UPROPERTY(VisibleAnywhere)
@@ -32,4 +46,6 @@ protected:
 
 	UPROPERTY(VisibleAnywhere)
 	USkeletalMeshComponent* mMesh;
+
+	FAIDeathDelegate mDeathDelegate;
 };

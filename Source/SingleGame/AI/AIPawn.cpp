@@ -16,6 +16,7 @@ AAIPawn::AAIPawn()
 
 	mMesh->SetupAttachment(mCapsule);
 
+	AutoPossessAI = EAutoPossessAI::PlacedInWorldOrSpawned;
 
 }
 
@@ -26,16 +27,26 @@ void AAIPawn::BeginPlay()
 	
 }
 
+void AAIPawn::EndPlay(const EEndPlayReason::Type EndPlayReason)
+{
+	Super::EndPlay(EndPlayReason);
+
+	if (mDeathDelegate.IsBound())	// 등록된 함수가 있을 경우
+		mDeathDelegate.Broadcast();	// 그 등록된 함수를 실행
+}
+
+float AAIPawn::TakeDamage(float DamageAmount, 
+	FDamageEvent const& DamageEvent, AController* EventInstigator, AActor* DamageCauser)
+{
+	float Damage = Super::TakeDamage(DamageAmount, DamageEvent, EventInstigator, DamageCauser);
+
+	Destroy();
+
+	return Damage;
+}
+
 // Called every frame
 void AAIPawn::Tick(float DeltaTime)
 {
 	Super::Tick(DeltaTime);
-
-}
-
-// Called to bind functionality to input
-void AAIPawn::SetupPlayerInputComponent(UInputComponent* PlayerInputComponent)
-{
-	Super::SetupPlayerInputComponent(PlayerInputComponent);
-
 }
