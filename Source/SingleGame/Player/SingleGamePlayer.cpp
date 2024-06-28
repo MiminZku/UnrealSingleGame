@@ -30,6 +30,8 @@ ASingleGamePlayer::ASingleGamePlayer()
 
 	GetMesh()->SetCollisionEnabled(ECollisionEnabled::NoCollision);
 	GetCapsuleComponent()->SetCollisionProfileName(TEXT("Player"));
+
+	Tags.Add(FName("Player"));
 }
 
 // Called when the game starts or when spawned

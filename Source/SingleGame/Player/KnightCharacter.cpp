@@ -97,7 +97,6 @@ void AKnightCharacter::AttackEnable()
 		{
 			FDamageEvent DmgEvent;
 			hitResult.GetActor()->TakeDamage(10.f, DmgEvent, GetController(), this);
-
 		}
 	}
 }

@@ -42,6 +42,10 @@ protected:
 
 	class AAIPawn* mSpawnActor = nullptr;
 
+	float mTime = 0.f;
+
+	bool bFirstSpawn = true;
+
 	UPROPERTY(EditAnywhere)
 	float mFirstSpawnTime = 0.f;
 

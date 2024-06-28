@@ -7,7 +7,7 @@
 // Sets default values
 AAISpawnActor::AAISpawnActor()
 {
- 	// Set this actor to call Tick() every frame.  You can turn this off to improve performance if you don't need it.
+	// Set this actor to call Tick() every frame.  You can turn this off to improve performance if you don't need it.
 	PrimaryActorTick.bCanEverTick = true;
 
 	mRoot = CreateDefaultSubobject<USceneComponent>(TEXT("Root"));
@@ -32,7 +32,6 @@ void AAISpawnActor::BeginPlay()
 {
 	Super::BeginPlay();
 
-	Spawn();
 }
 
 // Called every frame
@@ -40,6 +39,25 @@ void AAISpawnActor::Tick(float DeltaTime)
 {
 	Super::Tick(DeltaTime);
 
+	mTime += DeltaTime;
+
+	if (bFirstSpawn)
+	{
+		bFirstSpawn = false;
+		if (mTime >= mFirstSpawnTime)
+		{
+			mTime = 0.f;
+			Spawn();
+		}
+	}
+	else
+	{
+		if (mTime >= mSpawnTimeInterval)
+		{
+			mTime = 0.f;
+			Spawn();
+		}
+	}
 }
 
 void AAISpawnActor::Spawn()

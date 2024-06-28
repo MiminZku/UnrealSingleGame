@@ -39,5 +39,8 @@ protected:
 
 	UAISenseConfig_Sight* mSightConfig;
 
-	UAISenseConfig_Damage* mDamageConfig;
+	//UAISenseConfig_Damage* mDamageConfig;
+
+	UBehaviorTree* mBehaviorTree;
+	UBlackboardData* mBlackBoard;
 };

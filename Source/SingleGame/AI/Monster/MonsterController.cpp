@@ -27,6 +27,20 @@ AMonsterController::AMonsterController()
 	// 대표 감각기관 설정
 	mAIPerception->SetDominantSense(mSightConfig->GetSenseImplementation());
 
+
+	static ConstructorHelpers::FObjectFinder<UBehaviorTree>
+		BehaviorTree(TEXT("/Script/AIModule.BehaviorTree'/Game/_AI/Monsters/BT_MonsterDefault.BT_MonsterDefault'"));
+	if (BehaviorTree.Succeeded())
+	{
+		mBehaviorTree = BehaviorTree.Object;
+	}
+	static ConstructorHelpers::FObjectFinder<UBlackboardData>
+		BlackBoard(TEXT("/Script/AIModule.BlackboardData'/Game/_AI/Monsters/BB_MonsterDefault.BB_MonsterDefault'"));
+	if (BlackBoard.Succeeded())
+	{
+		mBlackBoard = BlackBoard.Object;
+	}
+
 }
 
 void AMonsterController::BeginPlay()
@@ -43,11 +57,21 @@ void AMonsterController::BeginPlay()
 void AMonsterController::OnPossess(APawn* InPawn)
 {
 	Super::OnPossess(InPawn);
+
+	if (IsValid(mBehaviorTree) && IsValid(mBlackBoard))	// GameInfo에서 include 해줘야 함
+	{
+		UBlackboardComponent* BlackboardRef = nullptr;
+		if (UseBlackboard(mBlackBoard, BlackboardRef))
+		{
+			RunBehaviorTree(mBehaviorTree);
+		}
+	}
 }
 
 void AMonsterController::OnUnPossess()
 {
 	Super::OnUnPossess();
+
 }
 
 void AMonsterController::Tick(float DeltaTime)
@@ -60,13 +84,28 @@ void AMonsterController::OnTargetDetect(AActor* Target, FAIStimulus Stimulus)
 {
 	if (Stimulus.WasSuccessfullySensed())
 	{
+		//AController* Controller = Cast<AController>(Target);
+		//if (IsValid(Controller))
+		//{
+		//	Target = Controller->GetPawn<AActor>();
+		//}
+		
+
 		if (GEngine) GEngine->AddOnScreenDebugMessage(-1, 1.f, FColor::Blue,
 			TEXT("Detected Target"));
+
+		if (Target->ActorHasTag(TEXT("Player")) &&
+			Target != Blackboard->GetValueAsObject(TEXT("Target")))
+		{
+			Blackboard->SetValueAsObject(TEXT("Target"), Target);
+		}
 	}
 	else
 	{
 		if (GEngine) GEngine->AddOnScreenDebugMessage(-1, 1.f, FColor::Red,
 			TEXT("Lost Target"));
+
+		Blackboard->SetValueAsObject(TEXT("Target"), nullptr);
 	}
 
 

@@ -13,4 +13,8 @@
 #include "Perception/AISenseConfig_Damage.h"
 #include "Perception/AIPerceptionStimuliSourceComponent.h"
 
+#include "BehaviorTree/BehaviorTree.h"
+#include "BehaviorTree/BlackBoardData.h"
+#include "BehaviorTree/BlackBoardComponent.h"
+
 DECLARE_LOG_CATEGORY_EXTERN(Sac6, Warning, All)
