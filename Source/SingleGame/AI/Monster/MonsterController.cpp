@@ -5,6 +5,12 @@
 
 AMonsterController::AMonsterController()
 {
+	// TeamID는 255개 ( 기본값은 255 )
+	SetGenericTeamId(FGenericTeamId(3));
+	 
+	//ETeamAttitude
+	//GetTeamAttitudeTowards()
+
 	mAIPerception = CreateDefaultSubobject<UAIPerceptionComponent>(TEXT("AIPerception"));
 	
 	// AI Controller 는 PerceptionComponent를 등록할 수 있게 되어 있다.
@@ -84,12 +90,11 @@ void AMonsterController::OnTargetDetect(AActor* Target, FAIStimulus Stimulus)
 {
 	if (Stimulus.WasSuccessfullySensed())
 	{
-		//AController* Controller = Cast<AController>(Target);
-		//if (IsValid(Controller))
-		//{
-		//	Target = Controller->GetPawn<AActor>();
-		//}
-		
+		AController* Controller = Cast<AController>(Target);
+		if (IsValid(Controller))
+		{
+			Target = Controller->GetPawn<AActor>();
+		}
 
 		if (GEngine) GEngine->AddOnScreenDebugMessage(-1, 1.f, FColor::Blue,
 			TEXT("Detected Target"));
