@@ -39,6 +39,8 @@ AKnightCharacter::AKnightCharacter()
 	{
 		mNormalAttackHitParticle = HitAsset.Object;
 	}
+
+	mJob = EPlayerJob::Knight;
 }
 
 void AKnightCharacter::BeginPlay()

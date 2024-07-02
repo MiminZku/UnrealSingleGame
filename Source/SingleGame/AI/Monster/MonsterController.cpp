@@ -24,8 +24,8 @@ AMonsterController::AMonsterController()
 	mSightConfig->PeripheralVisionAngleDegrees = 60.f;
 	//mSightConfig->SetMaxAge(0.f);
 	mSightConfig->DetectionByAffiliation.bDetectEnemies = true;
-	mSightConfig->DetectionByAffiliation.bDetectNeutrals = true;
-	mSightConfig->DetectionByAffiliation.bDetectFriendlies = true;
+	mSightConfig->DetectionByAffiliation.bDetectNeutrals = false;
+	mSightConfig->DetectionByAffiliation.bDetectFriendlies = false;
 
 	// AI Perception 배열에 추가
 	mAIPerception->ConfigureSense(*mSightConfig);
@@ -82,8 +82,26 @@ void AMonsterController::OnUnPossess()
 
 void AMonsterController::Tick(float DeltaTime)
 {
-	Super::Tick(DeltaTime);
+	Super::Tick(DeltaTime); 
 
+}
+
+FGenericTeamId AMonsterController::GetGenericTeamId() const
+{
+	return FGenericTeamId(mTeamID);
+}
+
+ETeamAttitude::Type AMonsterController::GetTeamAttitudeTowards(const AActor& Other) const
+{
+	const IGenericTeamAgentInterface* OtherTeamAgent = Cast<const IGenericTeamAgentInterface>(&Other);
+
+	if (!OtherTeamAgent || OtherTeamAgent->GetGenericTeamId() == 255)
+		return ETeamAttitude::Neutral;
+
+	if (GetGenericTeamId() == OtherTeamAgent->GetGenericTeamId())
+		return ETeamAttitude::Friendly;
+
+	return ETeamAttitude::Hostile;
 }
 
 void AMonsterController::OnTargetDetect(AActor* Target, FAIStimulus Stimulus)
@@ -99,7 +117,7 @@ void AMonsterController::OnTargetDetect(AActor* Target, FAIStimulus Stimulus)
 		if (GEngine) GEngine->AddOnScreenDebugMessage(-1, 1.f, FColor::Blue,
 			TEXT("Detected Target"));
 
-		if (Target->ActorHasTag(TEXT("Player")) &&
+		if (//Target->ActorHasTag(TEXT("Player")) &&
 			Target != Blackboard->GetValueAsObject(TEXT("Target")))
 		{
 			Blackboard->SetValueAsObject(TEXT("Target"), Target);
@@ -118,4 +136,5 @@ void AMonsterController::OnTargetDetect(AActor* Target, FAIStimulus Stimulus)
 
 void AMonsterController::OnTargetForget(AActor* Target)
 {
+
 }

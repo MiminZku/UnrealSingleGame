@@ -17,6 +17,24 @@ enum class EPlayerAnimType : uint8
 	Death,
 };
 
+USTRUCT(BlueprintType)
+struct FPlayerAnimData : public FTableRowBase // 데이터 테이블 구조체
+{
+	GENERATED_USTRUCT_BODY()
+public:
+	UPROPERTY(EditAnywhere, BlueprintReadOnly)
+	EPlayerJob Job;
+
+	UPROPERTY(EditAnywhere, BlueprintReadOnly)
+	TObjectPtr<UAnimMontage> mAttackMontage;
+
+	UPROPERTY(EditAnywhere, BlueprintReadOnly)
+	TArray<FName> mAttackSectionName;
+
+	UPROPERTY(EditAnywhere, BlueprintReadOnly)
+	FName mAttackAirSectionName;
+};
+
 UCLASS()
 class SINGLEGAME_API UPlayerAnimInstance : public UAnimInstance
 {

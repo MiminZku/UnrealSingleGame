@@ -10,7 +10,7 @@
 class UPlayerAnimInstance;
 
 UCLASS()
-class SINGLEGAME_API ASingleGamePlayer : public ACharacter
+class SINGLEGAME_API ASingleGamePlayer : public ACharacter, public IGenericTeamAgentInterface
 {
 	GENERATED_BODY()
 
@@ -41,6 +41,11 @@ public:
 	virtual void AttackEnable();
 	virtual void AttackDisable();
 
+	virtual void SetTeamId(uint8 TeamID) { mTeamID = TeamID; }
+	virtual FGenericTeamId GetGenericTeamId() const;
+
+	EPlayerJob GetJob() const { return mJob; }
+
 protected:
 	UPROPERTY(VisibleAnywhere)
 	USpringArmComponent* mSpringArm;
@@ -56,4 +61,8 @@ protected:
 
 	UPROPERTY(EditAnywhere)
 	UParticleSystem* mNormalAttackHitParticle;
+
+	uint8 mTeamID = 1;
+
+	EPlayerJob mJob;
 };

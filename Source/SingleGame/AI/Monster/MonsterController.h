@@ -24,6 +24,10 @@ protected:
 public:
 	virtual void Tick(float DeltaTime) override;
 
+	virtual void SetTeamId(uint8 ID) { mTeamID = ID; }
+	virtual FGenericTeamId GetGenericTeamId() const;
+	virtual ETeamAttitude::Type GetTeamAttitudeTowards(const AActor& Other) const;
+
 private:
 	UFUNCTION()
 	void OnTargetDetect(AActor* Target, FAIStimulus Stimulus);
@@ -43,4 +47,6 @@ protected:
 
 	UBehaviorTree* mBehaviorTree;
 	UBlackboardData* mBlackBoard;
+
+	uint8 mTeamID = 255;
 };

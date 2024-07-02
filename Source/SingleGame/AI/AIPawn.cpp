@@ -38,11 +38,12 @@ void AAIPawn::EndPlay(const EEndPlayReason::Type EndPlayReason)
 float AAIPawn::TakeDamage(float DamageAmount, 
 	FDamageEvent const& DamageEvent, AController* EventInstigator, AActor* DamageCauser)
 {
-	float Damage = Super::TakeDamage(DamageAmount, DamageEvent, EventInstigator, DamageCauser);
+	DamageAmount = Super::TakeDamage(DamageAmount, DamageEvent, EventInstigator, DamageCauser);
 
-	Destroy();
+	//Destroy();
 
-	return Damage;
+
+	return DamageAmount;
 }
 
 // Called every frame

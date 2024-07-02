@@ -18,3 +18,14 @@
 #include "BehaviorTree/BlackBoardComponent.h"
 
 DECLARE_LOG_CATEGORY_EXTERN(Sac6, Warning, All)
+
+UENUM(BlueprintType)
+enum class EPlayerJob : uint8
+{
+	None,
+	Knight,
+	Archer,
+	Magicion,
+	Soldier,
+	
+};

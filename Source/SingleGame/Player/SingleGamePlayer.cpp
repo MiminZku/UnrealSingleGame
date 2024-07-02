@@ -155,3 +155,8 @@ void ASingleGamePlayer::AttackDisable()
 {
 }
 
+FGenericTeamId ASingleGamePlayer::GetGenericTeamId() const
+{
+	return FGenericTeamId(mTeamID);
+}
+
