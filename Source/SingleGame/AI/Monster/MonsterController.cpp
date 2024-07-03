@@ -93,6 +93,9 @@ FGenericTeamId AMonsterController::GetGenericTeamId() const
 
 ETeamAttitude::Type AMonsterController::GetTeamAttitudeTowards(const AActor& Other) const
 {
+	//if (GEngine) GEngine->AddOnScreenDebugMessage(-1, 5.f, FColor::Blue,
+	//	FString::Printf(TEXT("Controller Team ID : %d"), mTeamID));
+
 	const IGenericTeamAgentInterface* OtherTeamAgent = Cast<const IGenericTeamAgentInterface>(&Other);
 
 	if (!OtherTeamAgent || OtherTeamAgent->GetGenericTeamId() == 255)
@@ -127,14 +130,16 @@ void AMonsterController::OnTargetDetect(AActor* Target, FAIStimulus Stimulus)
 	{
 		if (GEngine) GEngine->AddOnScreenDebugMessage(-1, 1.f, FColor::Red,
 			TEXT("Lost Target"));
-
+	
 		Blackboard->SetValueAsObject(TEXT("Target"), nullptr);
 	}
 
 
 }
 
+// 언제 호출 됨 이건?
 void AMonsterController::OnTargetForget(AActor* Target)
 {
-
+	//if (GEngine) GEngine->AddOnScreenDebugMessage(-1, 1.f, FColor::Red,
+	//	TEXT("Forgot Target"));
 }

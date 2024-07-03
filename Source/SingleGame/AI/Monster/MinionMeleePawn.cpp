@@ -2,6 +2,7 @@
 
 
 #include "MinionMeleePawn.h"
+#include "MonsterDefaultAnimTemplate.h"
 
 AMinionMeleePawn::AMinionMeleePawn()
 {
@@ -16,5 +17,46 @@ AMinionMeleePawn::AMinionMeleePawn()
 	if (MeshAsset.Succeeded())
 	{
 		mMesh->SetSkeletalMesh(MeshAsset.Object);
+	}
+
+	static ConstructorHelpers::FClassFinder<UAnimInstance>
+		MinionABP(TEXT("/Script/Engine.AnimBlueprint'/Game/_AI/Monsters/MinionMelee/ABP_MinionMelee.ABP_MinionMelee_C'"));
+	if (MinionABP.Succeeded())
+	{
+		mMesh->SetAnimInstanceClass(MinionABP.Class);
+	}
+
+}
+
+void AMinionMeleePawn::BeginPlay()
+{
+	Super::BeginPlay();
+
+	mMinionAnim = Cast<UMonsterDefaultAnimTemplate>(mMesh->GetAnimInstance());
+}
+
+void AMinionMeleePawn::SetState(EAIState State)
+{
+	Super::SetState(State);
+
+	switch (State)
+	{
+	case EAIState::Idle:
+		mMinionAnim->ChangeAnim(EMonsterDefaultAnim::Idle);
+		break;
+	case EAIState::Patrol:
+		mMinionAnim->ChangeAnim(EMonsterDefaultAnim::Walk);
+		break;
+	case EAIState::Trace:
+		mMinionAnim->ChangeAnim(EMonsterDefaultAnim::Run);
+		break;
+	case EAIState::Attack:
+		mMinionAnim->ChangeAnim(EMonsterDefaultAnim::Attack);
+		break;
+	case EAIState::Death:
+		mMinionAnim->ChangeAnim(EMonsterDefaultAnim::Death);
+		break;
+	default:
+		break;
 	}
 }

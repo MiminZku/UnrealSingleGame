@@ -3,6 +3,7 @@
 #pragma once
 
 #include "../GameInfo.h"
+#include "AIInfo.h"
 #include "GameFramework/Pawn.h"
 #include "AIPawn.generated.h"
 
@@ -20,17 +21,21 @@ public:
 protected:
 	// Called when the game starts or when spawned
 	virtual void BeginPlay() override;
-	virtual void EndPlay(const EEndPlayReason::Type EndPlayReason);
+
+	virtual void EndPlay(const EEndPlayReason::Type EndPlayReason) override;
 	virtual float TakeDamage(
 		float DamageAmount,
 		struct FDamageEvent const& DamageEvent,
 		class AController* EventInstigator,
-		AActor* DamageCauser);
+		AActor* DamageCauser) override;
 
 public:	
 	// Called every frame
 	virtual void Tick(float DeltaTime) override;
 
+	virtual void PossessedBy(AController* NewController) override;
+
+public:
 	UCapsuleComponent* GetCapsule() const { return mCapsule; }
 
 	template <typename T>
@@ -38,6 +43,9 @@ public:
 	{
 		mDeathDelegate.AddUObject(Object, Func);
 	}
+
+	virtual void SetState(EAIState State) { mState = State; }
+	EAIState GetState() { return mState; }
 
 
 protected:
@@ -48,4 +56,8 @@ protected:
 	USkeletalMeshComponent* mMesh;
 
 	FAIDeathDelegate mDeathDelegate;
+
+	uint8		mTeamID = 10;
+
+	EAIState	mState = EAIState::Idle;
 };

@@ -14,7 +14,7 @@ class SINGLEGAME_API UMonsterMovement : public UFloatingPawnMovement
 {
 	GENERATED_BODY()
 public:
-
+	UMonsterMovement();
 
 protected:
 

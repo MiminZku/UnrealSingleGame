@@ -3,6 +3,7 @@
 #pragma once
 
 #include "../../GameInfo.h"
+#include "../AIInfo.h"
 #include "AIController.h"
 #include "MonsterController.generated.h"
 
@@ -18,6 +19,7 @@ public:
 
 protected:
 	virtual void BeginPlay() override;
+
 	virtual void OnPossess(APawn* InPawn);
 	virtual void OnUnPossess();
 

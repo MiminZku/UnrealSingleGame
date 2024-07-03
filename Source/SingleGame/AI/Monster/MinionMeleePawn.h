@@ -16,4 +16,14 @@ class SINGLEGAME_API AMinionMeleePawn : public AMonsterPawn
 	
 public:
 	AMinionMeleePawn();
+
+protected:
+	virtual void BeginPlay() override;
+
+public:
+	virtual void SetState(EAIState State);
+
+
+protected:
+	class UMonsterDefaultAnimTemplate* mMinionAnim;
 };

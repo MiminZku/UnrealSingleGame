@@ -65,6 +65,8 @@ void AAISpawnActor::Spawn()
 	if (!IsValid(mSpawnClass))	return;
 
 	FActorSpawnParameters params;
+	params.SpawnCollisionHandlingOverride =
+		ESpawnActorCollisionHandlingMethod::AdjustIfPossibleButDontSpawnIfColliding;
 
 	FVector SpawnLoc = GetActorLocation();
 
@@ -78,7 +80,8 @@ void AAISpawnActor::Spawn()
 	mSpawnActor = GetWorld()->SpawnActor<AAIPawn>(mSpawnClass,
 		SpawnLoc, GetActorRotation(), params);
 
-	mSpawnActor->AddDeathDelegate<ThisClass>(this, &AAISpawnActor::AIDeathDelegate);
+	if(IsValid(mSpawnActor))
+		mSpawnActor->AddDeathDelegate<ThisClass>(this, &AAISpawnActor::AIDeathDelegate);
 }
 
 void AAISpawnActor::AIDeathDelegate()

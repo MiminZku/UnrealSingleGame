@@ -3,3 +3,7 @@
 
 #include "MonsterMovement.h"
 
+UMonsterMovement::UMonsterMovement()
+{
+	MaxSpeed = 500.f;
+}

@@ -16,6 +16,17 @@ public:
 	AMonsterPawn();
 
 protected:
+	virtual void BeginPlay() override;
+
+	virtual void EndPlay(const EEndPlayReason::Type EndPlayReason) override;
+
+public:
+	virtual void PossessedBy(AController* NewController) override;
+
+	virtual void SetState(EAIState State);
+
+protected:
 	UPROPERTY(VisibleAnywhere)
 	class UMonsterMovement* mMovement;
+
 };

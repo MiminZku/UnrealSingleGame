@@ -18,6 +18,8 @@ AAIPawn::AAIPawn()
 
 	AutoPossessAI = EAutoPossessAI::PlacedInWorldOrSpawned;
 
+	bUseControllerRotationYaw = true;
+
 }
 
 // Called when the game starts or when spawned
@@ -40,7 +42,7 @@ float AAIPawn::TakeDamage(float DamageAmount,
 {
 	DamageAmount = Super::TakeDamage(DamageAmount, DamageEvent, EventInstigator, DamageCauser);
 
-	//Destroy();
+	Destroy();
 
 
 	return DamageAmount;
@@ -50,4 +52,9 @@ float AAIPawn::TakeDamage(float DamageAmount,
 void AAIPawn::Tick(float DeltaTime)
 {
 	Super::Tick(DeltaTime);
+}
+
+void AAIPawn::PossessedBy(AController* NewController)
+{
+	Super::PossessedBy(NewController);
 }
