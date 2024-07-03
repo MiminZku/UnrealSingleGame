@@ -31,6 +31,12 @@ public:
 		mMonsterAnim = Anim;
 	}
 
+	UFUNCTION()
+	void AnimNotify_Attack();
+
+	UFUNCTION()
+	void AnimNotify_AttackEnd();
+
 protected:
 	UPROPERTY(VisibleAnywhere, BlueprintReadOnly)
 	EMonsterDefaultAnim mMonsterAnim = EMonsterDefaultAnim::Idle;

@@ -25,6 +25,8 @@ public:
 
 	virtual void SetState(EAIState State);
 
+	virtual void Attack();
+
 protected:
 	UPROPERTY(VisibleAnywhere)
 	class UMonsterMovement* mMovement;

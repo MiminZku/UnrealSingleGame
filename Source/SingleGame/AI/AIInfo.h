@@ -19,3 +19,10 @@ enum class EAIState : uint8
 	Attack,
 	Death,
 };
+
+class MonsterDefaultKey
+{
+public:
+	static FName mTarget;
+	static FName mAttackEnd;
+};

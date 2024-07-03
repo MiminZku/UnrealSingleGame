@@ -121,9 +121,9 @@ void AMonsterController::OnTargetDetect(AActor* Target, FAIStimulus Stimulus)
 			TEXT("Detected Target"));
 
 		if (//Target->ActorHasTag(TEXT("Player")) &&
-			Target != Blackboard->GetValueAsObject(TEXT("Target")))
+			Target != Blackboard->GetValueAsObject(MonsterDefaultKey::mTarget))
 		{
-			Blackboard->SetValueAsObject(TEXT("Target"), Target);
+			Blackboard->SetValueAsObject(MonsterDefaultKey::mTarget, Target);
 		}
 	}
 	else
@@ -131,7 +131,7 @@ void AMonsterController::OnTargetDetect(AActor* Target, FAIStimulus Stimulus)
 		if (GEngine) GEngine->AddOnScreenDebugMessage(-1, 1.f, FColor::Red,
 			TEXT("Lost Target"));
 	
-		Blackboard->SetValueAsObject(TEXT("Target"), nullptr);
+		Blackboard->SetValueAsObject(MonsterDefaultKey::mTarget, nullptr);
 	}
 
 

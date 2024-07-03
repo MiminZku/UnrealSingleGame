@@ -23,7 +23,9 @@ protected:
 public:
 	virtual void SetState(EAIState State);
 
+	virtual void Attack() override;
 
 protected:
 	class UMonsterDefaultAnimTemplate* mMinionAnim;
+	UParticleSystem* mAttackParticle;
 };

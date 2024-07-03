@@ -42,3 +42,7 @@ void AMonsterPawn::SetState(EAIState State)
 {
 	Super::SetState(State);
 }
+
+void AMonsterPawn::Attack()
+{
+}

@@ -72,7 +72,7 @@ void AKnightCharacter::NormalAttack()
 
 void AKnightCharacter::AttackEnable()
 {
-	mSwordCollisionBox->SetCollisionEnabled(ECollisionEnabled::QueryOnly);
+	//mSwordCollisionBox->SetCollisionEnabled(ECollisionEnabled::QueryOnly);
 
 	FVector Start = GetActorLocation() + GetActorForwardVector() * 50.f;
 	FVector End = Start + GetActorForwardVector() * 200.f;
@@ -82,7 +82,7 @@ void AKnightCharacter::AttackEnable()
 
 	TArray<FHitResult> hitResultArr;
 	bool Collision = GetWorld()->SweepMultiByChannel(hitResultArr, Start, End,
-		FQuat::Identity, ECollisionChannel::ECC_GameTraceChannel17,
+		FQuat::Identity, ECollisionChannel::ECC_GameTraceChannel5,
 		FCollisionShape::MakeSphere(50.f), params);
 
 #if ENABLE_DRAW_DEBUG

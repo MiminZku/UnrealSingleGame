@@ -53,24 +53,36 @@ void UBTTask_Attack::TickTask(UBehaviorTreeComponent& OwnerComp, uint8* NodeMemo
 
 	FVector AILocation = AIPawn->GetActorLocation();
 	FVector TargetLocation = Target->GetActorLocation();
-	AILocation.Z = 0;
-	TargetLocation.Z = 0;
-
-	float Distance = FVector::Distance(AILocation, TargetLocation);
+	
+	AILocation.Z -= AIPawn->GetCapsule()->GetScaledCapsuleHalfHeight();
 	float Radius = AIPawn->GetCapsule()->GetScaledCapsuleRadius();
 	UCapsuleComponent* TargetCapsule = Cast<UCapsuleComponent>(Target->GetRootComponent());
 	if (IsValid(TargetCapsule))
 	{
+		TargetLocation.Z -= TargetCapsule->GetScaledCapsuleHalfHeight();
 		Radius += TargetCapsule->GetScaledCapsuleRadius();
 	}
 
-	if (Distance - Radius > 300.f)
+	bool AttackEnd = OwnerComp.GetAIOwner()->GetBlackboardComponent()
+		->GetValueAsBool(MonsterDefaultKey::mAttackEnd);
+	if (AttackEnd)
 	{
-		FinishLatentTask(OwnerComp, EBTNodeResult::Failed);
-	}
-	else
-	{
+		float Distance = FVector::Distance(AILocation, TargetLocation);
+		if (Distance - Radius > 300.f)
+		{
+			FinishLatentTask(OwnerComp, EBTNodeResult::Failed);
+		}
+		else
+		{
+			FVector Dir = TargetLocation - AILocation;
 
+			FRotator Rot = Dir.Rotation();
+
+			AIPawn->SetActorRotation(FRotator(0.f, Rot.Yaw, 0.f));
+		}
+
+		OwnerComp.GetAIOwner()->GetBlackboardComponent()
+			->SetValueAsBool(MonsterDefaultKey::mAttackEnd, false);
 	}
 }
 

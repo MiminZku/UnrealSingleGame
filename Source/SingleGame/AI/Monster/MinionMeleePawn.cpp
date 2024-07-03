@@ -25,7 +25,12 @@ AMinionMeleePawn::AMinionMeleePawn()
 	{
 		mMesh->SetAnimInstanceClass(MinionABP.Class);
 	}
-
+	static ConstructorHelpers::FObjectFinder<UParticleSystem>
+		HitAsset(TEXT("/Script/Engine.ParticleSystem'/Game/ParagonKwang/FX/Particles/Abilities/Primary/FX/P_Kwang_Primary_Impact.P_Kwang_Primary_Impact'"));
+	if (HitAsset.Succeeded())
+	{
+		mAttackParticle = HitAsset.Object;
+	}
 }
 
 void AMinionMeleePawn::BeginPlay()
@@ -58,5 +63,36 @@ void AMinionMeleePawn::SetState(EAIState State)
 		break;
 	default:
 		break;
+	}
+}
+
+void AMinionMeleePawn::Attack()
+{
+	FVector Start = GetActorLocation() + GetActorForwardVector() * 50.f;
+	FVector End = Start + GetActorForwardVector() * 200.f;
+
+	FCollisionQueryParams params;
+	params.AddIgnoredActor(this);
+
+	TArray<FHitResult> hitResultArr;
+	bool Collision = GetWorld()->SweepMultiByChannel(hitResultArr, Start, End,
+		FQuat::Identity, ECollisionChannel::ECC_GameTraceChannel6,
+		FCollisionShape::MakeSphere(50.f), params);
+
+#if ENABLE_DRAW_DEBUG
+	FColor DrawColor = Collision ? FColor::Orange : FColor::Blue;
+
+	DrawDebugCapsule(GetWorld(), (Start + End) / 2.f,
+		100.f, 50.f, FRotationMatrix::MakeFromZ(GetActorForwardVector()).ToQuat(),
+		DrawColor, false, 1.f);
+#endif
+
+	if (Collision)
+	{
+		for (FHitResult& hitResult : hitResultArr)
+		{
+			FDamageEvent DmgEvent;
+			hitResult.GetActor()->TakeDamage(10.f, DmgEvent, GetController(), this);
+		}
 	}
 }

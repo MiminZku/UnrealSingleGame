@@ -37,8 +37,6 @@ private:
 	UFUNCTION()
 	void OnTargetForget(AActor* Target);
 
-
-
 protected:
 	UPROPERTY(VisibleAnywhere)
 	UAIPerceptionComponent* mAIPerception;
