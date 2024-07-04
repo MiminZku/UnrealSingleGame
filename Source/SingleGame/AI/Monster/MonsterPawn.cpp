@@ -4,6 +4,8 @@
 #include "MonsterPawn.h"
 #include "MonsterMovement.h"
 #include "MonsterController.h"
+#include "MonsterDataManager.h"
+#include "AIController.h"
 
 AMonsterPawn::AMonsterPawn()
 {
@@ -19,6 +21,17 @@ AMonsterPawn::AMonsterPawn()
 void AMonsterPawn::BeginPlay()
 {
 	Super::BeginPlay();
+
+	const FMonsterInfoData* Info = MonsterDataManager::GetInst()->FindInfo(mMonsterInfoKey);
+	if (Info)
+	{
+		mAttack = Info->mAttack;
+		mDefense = Info->mDefense;
+		mLife = mLifeMax = Info->mLife;
+		mMana = mManaMax = Info->mMana;
+		mMoveSpeed = Info->mMoveSpeed;
+		mAttackDistance = Info->mAttackDistance;
+	}
 }
 
 void AMonsterPawn::EndPlay(const EEndPlayReason::Type EndPlayReason)
@@ -45,4 +58,29 @@ void AMonsterPawn::SetState(EAIState State)
 
 void AMonsterPawn::Attack()
 {
+}
+
+float AMonsterPawn::TakeDamage(float DamageAmount, FDamageEvent const& DamageEvent,
+	AController* EventInstigator, AActor* DamageCauser)
+{
+	DamageAmount = Super::TakeDamage(DamageAmount, DamageEvent, EventInstigator, DamageCauser);
+
+	mLife -= DamageAmount;
+
+	if (mLife <= 0.f)
+	{
+		SetState(EAIState::Death);
+
+		AAIController* Ctrl = GetController<AAIController>();
+
+		if (IsValid(Ctrl))
+		{
+			//사유를 전달하며 비헤이비어 트리 종료
+			Ctrl->GetBrainComponent()->StopLogic(TEXT("Death"));
+		}
+
+		
+		//Destroy();
+	}
+	return DamageAmount;
 }

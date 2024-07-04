@@ -44,10 +44,6 @@ float AAIPawn::TakeDamage(
 {
 	DamageAmount = Super::TakeDamage(DamageAmount, DamageEvent, EventInstigator, DamageCauser);
 
-	//Destroy();
-
-
-
 	return DamageAmount;
 }
 

@@ -8,7 +8,7 @@
 UBTTask_TraceTarget::UBTTask_TraceTarget()
 {
 	NodeName = TEXT("BTT_TraceTarget");
-	AcceptableRadius = 50.f;
+	AcceptableRadius = 100.f;
 	BlackboardKey.SelectedKeyName = TEXT("Target");
 }
 

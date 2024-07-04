@@ -29,4 +29,10 @@ void UMonsterDefaultAnimTemplate::AnimNotify_AttackEnd()
 void UMonsterDefaultAnimTemplate::SetAnimData(const FName& Key)
 {
 	const FMonsterAnimData* AnimData = MonsterDataManager::GetInst()->FindAnim(Key);
+
+	if (AnimData)
+	{
+		mSequenceMap = AnimData->mSequenceMap;
+		mBlendSpaceMap = AnimData->mBlendSpaceMap;
+	}
 }

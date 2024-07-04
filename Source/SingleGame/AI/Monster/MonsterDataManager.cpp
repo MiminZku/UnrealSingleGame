@@ -11,6 +11,11 @@ MonsterDataManager::MonsterDataManager()
 		MonsterAnimTable(TEXT("/Script/Engine.DataTable'/Game/_AI/Monsters/DT_MonsterAnim.DT_MonsterAnim'"));
 	if (MonsterAnimTable.Succeeded())
 		mMonsterAnimTable = MonsterAnimTable.Object;
+
+	ConstructorHelpers::FObjectFinder<UDataTable>
+		MonsterInfoTable(TEXT("/Script/Engine.DataTable'/Game/_AI/Monsters/DT_MonsterAnim.DT_MonsterAnim'"));
+	if (MonsterInfoTable.Succeeded())
+		mMonsterInfoTable = MonsterInfoTable.Object;
 }
 
 MonsterDataManager::~MonsterDataManager()
@@ -25,4 +30,9 @@ bool MonsterDataManager::Init()
 const FMonsterAnimData* MonsterDataManager::FindAnim(const FName& Key)
 {
 	return mMonsterAnimTable->FindRow<FMonsterAnimData>(Key, TEXT(""));
+}
+
+const FMonsterInfoData* MonsterDataManager::FindInfo(const FName& Key)
+{
+	return mMonsterInfoTable->FindRow<FMonsterInfoData>(Key, TEXT(""));
 }

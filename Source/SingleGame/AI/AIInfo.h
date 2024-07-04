@@ -20,6 +20,7 @@ enum class EAIState : uint8
 	Trace,
 	Attack,
 	Death,
+	Hit,
 };
 
 class MonsterDefaultKey
@@ -39,4 +40,34 @@ public:
 
 	UPROPERTY(EditAnywhere, BlueprintReadOnly)
 	TMap<FString, UBlendSpace*> mBlendSpaceMap;
+
+	UPROPERTY(EditAnywhere, BlueprintReadOnly)
+	TMap<FString, UAnimMontage*> mMontageMap;
+};
+
+USTRUCT(BlueprintType)
+struct FMonsterInfoData : public FTableRowBase
+{
+	GENERATED_USTRUCT_BODY()	// generated.h ÇÊ¿ä
+public:
+	UPROPERTY(EditAnywhere, BlueprintReadOnly)
+	FString mName;
+
+	UPROPERTY(EditAnywhere, BlueprintReadOnly)
+	float mAttack;
+
+	UPROPERTY(EditAnywhere, BlueprintReadOnly)
+	float mDefense;
+
+	UPROPERTY(EditAnywhere, BlueprintReadOnly)
+	float mLife;
+
+	UPROPERTY(EditAnywhere, BlueprintReadOnly)
+	float mMana;
+
+	UPROPERTY(EditAnywhere, BlueprintReadOnly)
+	float mMoveSpeed;
+
+	UPROPERTY(EditAnywhere, BlueprintReadOnly)
+	float mAttackDistance;
 };

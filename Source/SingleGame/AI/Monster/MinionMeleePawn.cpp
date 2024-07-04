@@ -31,6 +31,8 @@ AMinionMeleePawn::AMinionMeleePawn()
 	{
 		mAttackParticle = HitAsset.Object;
 	}
+
+	mMonsterInfoKey = TEXT("Minion");
 }
 
 void AMinionMeleePawn::BeginPlay()
@@ -62,6 +64,9 @@ void AMinionMeleePawn::SetState(EAIState State)
 		break;
 	case EAIState::Death:
 		mMinionAnim->ChangeAnim(EMonsterDefaultAnim::Death);
+		break;
+	case EAIState::Hit:
+		mMinionAnim->ChangeAnim(EMonsterDefaultAnim::Hit);
 		break;
 	default:
 		break;

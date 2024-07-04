@@ -99,7 +99,7 @@ void AKnightCharacter::AttackEnable()
 		for (FHitResult& hitResult : hitResultArr)
 		{
 			FDamageEvent DmgEvent;
-			hitResult.GetActor()->TakeDamage(10.f, DmgEvent, GetController(), this);
+			hitResult.GetActor()->TakeDamage(50.f, DmgEvent, GetController(), this);
 		}
 	}
 }

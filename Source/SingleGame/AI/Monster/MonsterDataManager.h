@@ -34,10 +34,12 @@ public:
 	bool Init();
 
 	const FMonsterAnimData* FindAnim(const FName& Key);
+	const FMonsterInfoData* FindInfo(const FName& Key);
 
 public:
 	static MonsterDataManager* mInst;
 
 private:
 	UDataTable* mMonsterAnimTable = nullptr;
+	UDataTable* mMonsterInfoTable = nullptr;
 };

@@ -45,7 +45,10 @@ public:
 	}
 
 	virtual void SetState(EAIState State) { mState = State; }
+	void SetName(const FString& Name) { mName = Name; }
+	
 	EAIState GetState() { return mState; }
+	const FString& GetName() const { return mName; }
 
 
 protected:
@@ -56,6 +59,8 @@ protected:
 	USkeletalMeshComponent* mMesh;
 
 	FAIDeathDelegate mDeathDelegate;
+
+	FString mName;
 
 	uint8		mTeamID = 10;
 

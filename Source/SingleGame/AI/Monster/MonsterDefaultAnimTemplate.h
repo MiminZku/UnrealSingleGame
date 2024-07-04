@@ -14,7 +14,8 @@ enum class EMonsterDefaultAnim : uint8
 	Walk,
 	Run,
 	Attack,
-	Death
+	Death,
+	Hit,
 };
 
 UCLASS()
@@ -37,23 +38,31 @@ public:
 	UFUNCTION()
 	void AnimNotify_AttackEnd();
 
+	void SetAnimData(const FName& Key);
+
 protected:
 	UPROPERTY(VisibleAnywhere, BlueprintReadOnly)
 	EMonsterDefaultAnim mMonsterAnim = EMonsterDefaultAnim::Idle;
-	
-	UPROPERTY(EditAnywhere, BlueprintReadOnly)
-	UAnimSequence* mIdle;
 
 	UPROPERTY(EditAnywhere, BlueprintReadOnly)
-	UAnimSequence* mWalk;
+	TMap<FString, UAnimSequence*> mSequenceMap;
 
 	UPROPERTY(EditAnywhere, BlueprintReadOnly)
-	UAnimSequence* mRun;
+	TMap<FString, UBlendSpace*> mBlendSpaceMap;
 
-	UPROPERTY(EditAnywhere, BlueprintReadOnly)
-	UAnimSequence* mAttack;
+	//UPROPERTY(EditAnywhere, BlueprintReadOnly)
+	//UAnimSequence* mIdle;
 
-	UPROPERTY(EditAnywhere, BlueprintReadOnly)
-	UAnimSequence* mDeath;
+	//UPROPERTY(EditAnywhere, BlueprintReadOnly)
+	//UAnimSequence* mWalk;
+
+	//UPROPERTY(EditAnywhere, BlueprintReadOnly)
+	//UAnimSequence* mRun;
+
+	//UPROPERTY(EditAnywhere, BlueprintReadOnly)
+	//UAnimSequence* mAttack;
+
+	//UPROPERTY(EditAnywhere, BlueprintReadOnly)
+	//UAnimSequence* mDeath;
 
 };

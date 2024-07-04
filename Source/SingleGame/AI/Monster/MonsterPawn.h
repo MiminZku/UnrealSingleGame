@@ -27,8 +27,23 @@ public:
 
 	virtual void Attack();
 
+	virtual float TakeDamage(
+		float DamageAmount,
+		struct FDamageEvent const& DamageEvent,
+		class AController* EventInstigator,
+		AActor* DamageCauser) override;
+
 protected:
 	UPROPERTY(VisibleAnywhere)
 	class UMonsterMovement* mMovement;
 
+	FName mMonsterInfoKey;
+	float mAttack;
+	float mDefense;
+	float mLife;
+	float mLifeMax;
+	float mMana;
+	float mManaMax;
+	float mMoveSpeed;
+	float mAttackDistance;
 };
