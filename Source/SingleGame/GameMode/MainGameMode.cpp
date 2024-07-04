@@ -3,9 +3,16 @@
 
 #include "MainGameMode.h"
 #include "../Player/KnightCharacter.h"
+#include "../AI/Monster/MonsterDataManager.h"
 
 AMainGameMode::AMainGameMode()
 {
 	DefaultPawnClass = AKnightCharacter::StaticClass();
 
+	MonsterDataManager::GetInst()->Init();
+}
+
+AMainGameMode::~AMainGameMode()
+{
+	MonsterDataManager::DestroyInst();
 }

@@ -11,6 +11,8 @@
 #include "BehaviorTree/BlackBoardData.h"
 #include "BehaviorTree/BlackBoardComponent.h"
 
+#include "AIInfo.generated.h"
+
 enum class EAIState : uint8
 {
 	Idle,
@@ -25,4 +27,16 @@ class MonsterDefaultKey
 public:
 	static FName mTarget;
 	static FName mAttackEnd;
+};
+
+USTRUCT(BlueprintType)
+struct FMonsterAnimData : public FTableRowBase
+{
+	GENERATED_USTRUCT_BODY()	// generated.h ÇÊ¿ä
+public:
+	UPROPERTY(EditAnywhere, BlueprintReadOnly)
+	TMap<FString, UAnimSequence*> mSequenceMap;
+
+	UPROPERTY(EditAnywhere, BlueprintReadOnly)
+	TMap<FString, UBlendSpace*> mBlendSpaceMap;
 };

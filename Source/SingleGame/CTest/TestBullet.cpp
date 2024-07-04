@@ -75,7 +75,7 @@ void ATestBullet::ProjectileHit(const FHitResult& HitResult)
 
 	// LoadObject : 참조없는 애셋을 로딩하고 참조할 때 사용
 	UParticleSystem* Particle = LoadObject<UParticleSystem>(GetWorld(),
-		TEXT("/Script/Engine.ParticleSystem'/Game/AdvancedMagicFX13/Particles/P_ky_burst.P_ky_burst'"));
+		TEXT("/Script/Engine.ParticleSystem'/Game/__Art/Effects/AdvancedMagicFX13/Particles/P_ky_gaither.P_ky_gaither'"));
 
 
 	if (IsValid(Particle))
@@ -93,7 +93,7 @@ void ATestBullet::ProjectileHit(const FHitResult& HitResult)
 
 
 	USoundBase* Sound = LoadObject<USoundBase>(GetWorld(),
-		TEXT("/Script/Engine.SoundWave'/Game/Sound/Fire1.Fire1'"));
+		TEXT("/Script/Engine.SoundWave'/Game/__Art/Sounds/Fire1.Fire1'"));
 
 	if (IsValid(Sound))
 	{

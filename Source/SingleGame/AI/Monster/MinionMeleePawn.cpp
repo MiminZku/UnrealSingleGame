@@ -38,6 +38,8 @@ void AMinionMeleePawn::BeginPlay()
 	Super::BeginPlay();
 
 	mMinionAnim = Cast<UMonsterDefaultAnimTemplate>(mMesh->GetAnimInstance());
+
+	mMinionAnim->SetAnimData(TEXT("MinionMelee"));
 }
 
 void AMinionMeleePawn::SetState(EAIState State)

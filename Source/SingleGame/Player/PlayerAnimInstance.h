@@ -18,7 +18,7 @@ enum class EPlayerAnimType : uint8
 };
 
 USTRUCT(BlueprintType)
-struct FPlayerAnimData : public FTableRowBase // 데이터 테이블 구조체
+struct FPlayerAnimData : public FTableRowBase // 데이터 테이블 구조체(행 구조)
 {
 	GENERATED_USTRUCT_BODY()
 public:
@@ -33,6 +33,12 @@ public:
 
 	UPROPERTY(EditAnywhere, BlueprintReadOnly)
 	FName mAttackAirSectionName;
+
+	UPROPERTY(EditAnywhere, BlueprintReadOnly)
+	TMap<FString, UAnimSequence*> mSequenceMap;
+
+	UPROPERTY(EditAnywhere, BlueprintReadOnly)
+	TMap<FString, UBlendSpace*> mBlendSpaceMap;
 };
 
 UCLASS()

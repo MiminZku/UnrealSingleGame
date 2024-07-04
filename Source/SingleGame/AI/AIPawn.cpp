@@ -11,6 +11,7 @@ AAIPawn::AAIPawn()
 
 	mCapsule = CreateDefaultSubobject<UCapsuleComponent>(TEXT("Capsule"));
 	mMesh = CreateDefaultSubobject<USkeletalMeshComponent>(TEXT("Mesh"));
+	mMesh->bReceivesDecals = false;
 
 	SetRootComponent(mCapsule);
 
@@ -37,12 +38,14 @@ void AAIPawn::EndPlay(const EEndPlayReason::Type EndPlayReason)
 		mDeathDelegate.Broadcast();	// 그 등록된 함수를 실행
 }
 
-float AAIPawn::TakeDamage(float DamageAmount, 
-	FDamageEvent const& DamageEvent, AController* EventInstigator, AActor* DamageCauser)
+float AAIPawn::TakeDamage(
+	float DamageAmount, FDamageEvent const& DamageEvent, 
+	AController* EventInstigator, AActor* DamageCauser)
 {
 	DamageAmount = Super::TakeDamage(DamageAmount, DamageEvent, EventInstigator, DamageCauser);
 
-	Destroy();
+	//Destroy();
+
 
 
 	return DamageAmount;

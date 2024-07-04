@@ -16,4 +16,5 @@ class SINGLEGAME_API AMainGameMode : public AGameModeBase
 	
 public:
 	AMainGameMode();
+	~AMainGameMode();
 };
