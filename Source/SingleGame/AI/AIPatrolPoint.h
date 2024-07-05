@@ -2,18 +2,19 @@
 
 #pragma once
 
+#include "AIInfo.h"
 #include "../GameInfo.h"
 #include "GameFramework/Actor.h"
-#include "AISpawnActor.generated.h"
+#include "AIPatrolPoint.generated.h"
 
 UCLASS()
-class SINGLEGAME_API AAISpawnActor : public AActor
+class SINGLEGAME_API AAIPatrolPoint : public AActor
 {
 	GENERATED_BODY()
 	
 public:	
 	// Sets default values for this actor's properties
-	AAISpawnActor();
+	AAIPatrolPoint();
 
 protected:
 	// Called when the game starts or when spawned
@@ -23,12 +24,6 @@ public:
 	// Called every frame
 	virtual void Tick(float DeltaTime) override;
 
-private:
-	void Spawn();
-
-	UFUNCTION()
-	void AIDeathDelegate();
-
 protected:
 #if WITH_EDITORONLY_DATA
 	UArrowComponent* mArrowComponent;
@@ -36,22 +31,4 @@ protected:
 
 	UPROPERTY(VisibleAnywhere)
 	USceneComponent* mRoot;
-
-	UPROPERTY(EditAnywhere)
-	TSubclassOf<class AAIPawn> mSpawnClass;
-
-	class AAIPawn* mSpawnActor = nullptr;
-
-	float mTime = 0.f;
-
-	bool bFirstSpawn = true;
-
-	UPROPERTY(EditAnywhere)
-	float mFirstSpawnTime = 0.f;
-
-	UPROPERTY(EditAnywhere)
-	float mSpawnTimeInterval = 5.f;
-
-	UPROPERTY(EditAnywhere)
-	TArray<class AAIPatrolPoint*> mPatrolPointArr;
 };

@@ -33,6 +33,9 @@ public:
 		class AController* EventInstigator,
 		AActor* DamageCauser) override;
 
+public:
+	float GetAttackDistance() { return mAttackDistance; }
+
 protected:
 	UPROPERTY(VisibleAnywhere)
 	class UMonsterMovement* mMovement;

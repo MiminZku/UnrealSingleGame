@@ -13,7 +13,7 @@ MonsterDataManager::MonsterDataManager()
 		mMonsterAnimTable = MonsterAnimTable.Object;
 
 	ConstructorHelpers::FObjectFinder<UDataTable>
-		MonsterInfoTable(TEXT("/Script/Engine.DataTable'/Game/_AI/Monsters/DT_MonsterAnim.DT_MonsterAnim'"));
+		MonsterInfoTable(TEXT("/Script/Engine.DataTable'/Game/_AI/Monsters/DT_MonsterInfo.DT_MonsterInfo'"));
 	if (MonsterInfoTable.Succeeded())
 		mMonsterInfoTable = MonsterInfoTable.Object;
 }

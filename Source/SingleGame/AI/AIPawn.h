@@ -43,6 +43,7 @@ public:
 	{
 		mDeathDelegate.AddUObject(Object, Func);
 	}
+	void RegisterPatrolPoint();
 
 	virtual void SetState(EAIState State) { mState = State; }
 	void SetName(const FString& Name) { mName = Name; }
@@ -50,6 +51,7 @@ public:
 	EAIState GetState() { return mState; }
 	const FString& GetName() const { return mName; }
 
+	void SetPatrolPoints(const TArray<class AAIPatrolPoint*>& Array);
 
 protected:
 	UPROPERTY(VisibleAnywhere)
@@ -65,4 +67,7 @@ protected:
 	uint8		mTeamID = 10;
 
 	EAIState	mState = EAIState::Idle;
+
+	TArray<class AAIPatrolPoint*>	mPatrolPointArr;
+	int32	mNextPatrolPointIdx = 0;
 };

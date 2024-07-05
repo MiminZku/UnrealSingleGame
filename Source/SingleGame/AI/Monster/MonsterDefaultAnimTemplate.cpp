@@ -26,6 +26,11 @@ void UMonsterDefaultAnimTemplate::AnimNotify_AttackEnd()
 		->SetValueAsBool(MonsterDefaultKey::mAttackEnd, true);
 }
 
+void UMonsterDefaultAnimTemplate::AnimNotify_DeathEnd()
+{
+	TryGetPawnOwner()->Destroy();
+}
+
 void UMonsterDefaultAnimTemplate::SetAnimData(const FName& Key)
 {
 	const FMonsterAnimData* AnimData = MonsterDataManager::GetInst()->FindAnim(Key);

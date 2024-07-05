@@ -23,6 +23,7 @@ void AMonsterPawn::BeginPlay()
 	Super::BeginPlay();
 
 	const FMonsterInfoData* Info = MonsterDataManager::GetInst()->FindInfo(mMonsterInfoKey);
+
 	if (Info)
 	{
 		mAttack = Info->mAttack;

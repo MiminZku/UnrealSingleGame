@@ -3,6 +3,7 @@
 
 #include "AISpawnActor.h"
 #include "AIPawn.h"
+#include "AIPatrolPoint.h"
 
 // Sets default values
 AAISpawnActor::AAISpawnActor()
@@ -32,6 +33,10 @@ void AAISpawnActor::BeginPlay()
 {
 	Super::BeginPlay();
 
+	// 스폰된 위치도 패트롤 포인트로 추가
+	mPatrolPointArr.Add(
+		GetWorld()->SpawnActor<AAIPatrolPoint>(AAIPatrolPoint::StaticClass(),
+			GetActorLocation(), GetActorRotation()));
 }
 
 // Called every frame
@@ -52,7 +57,7 @@ void AAISpawnActor::Tick(float DeltaTime)
 	}
 	else
 	{
-		if (mTime >= mSpawnTimeInterval)
+		if (mTime >= mSpawnTimeInterval && !IsValid(mSpawnActor))
 		{
 			mTime = 0.f;
 			Spawn();
@@ -80,8 +85,12 @@ void AAISpawnActor::Spawn()
 	mSpawnActor = GetWorld()->SpawnActor<AAIPawn>(mSpawnClass,
 		SpawnLoc, GetActorRotation(), params);
 
-	if(IsValid(mSpawnActor))
+	if (IsValid(mSpawnActor))
+	{
 		mSpawnActor->AddDeathDelegate<ThisClass>(this, &AAISpawnActor::AIDeathDelegate);
+		mSpawnActor->SetPatrolPoints(mPatrolPointArr);
+		mSpawnActor->RegisterPatrolPoint();
+	}
 }
 
 void AAISpawnActor::AIDeathDelegate()

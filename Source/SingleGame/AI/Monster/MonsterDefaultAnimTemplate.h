@@ -38,6 +38,9 @@ public:
 	UFUNCTION()
 	void AnimNotify_AttackEnd();
 
+	UFUNCTION()
+	void AnimNotify_DeathEnd();
+
 	void SetAnimData(const FName& Key);
 
 protected:

@@ -4,10 +4,11 @@
 #include "BTTask_Attack.h"
 #include "../AIPawn.h"
 #include "AIController.h"
+#include "../Monster/MonsterPawn.h"
 
 UBTTask_Attack::UBTTask_Attack()
 {
-	NodeName = TEXT("Attack");
+	NodeName = TEXT("BTT_Attack");
 	bNotifyTick = true;
 }
 
@@ -68,7 +69,11 @@ void UBTTask_Attack::TickTask(UBehaviorTreeComponent& OwnerComp, uint8* NodeMemo
 	if (AttackEnd)
 	{
 		float Distance = FVector::Distance(AILocation, TargetLocation);
-		if (Distance - Radius > 300.f)
+		float MonsterAttackDistance = 0.f;
+		AMonsterPawn* MonsterPawn = Cast<AMonsterPawn>(AIPawn);
+		if (MonsterPawn)	MonsterAttackDistance = MonsterPawn->GetAttackDistance();
+
+		if (Distance - Radius > MonsterAttackDistance)
 		{
 			FinishLatentTask(OwnerComp, EBTNodeResult::Failed);
 		}

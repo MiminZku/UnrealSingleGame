@@ -62,8 +62,6 @@ void AMonsterController::BeginPlay()
 
 void AMonsterController::OnPossess(APawn* InPawn)
 {
-	Super::OnPossess(InPawn);
-
 	if (IsValid(mBehaviorTree) && IsValid(mBlackBoard))	// GameInfo에서 include 해줘야 함
 	{
 		UBlackboardComponent* BlackboardRef = nullptr;
@@ -72,6 +70,8 @@ void AMonsterController::OnPossess(APawn* InPawn)
 			RunBehaviorTree(mBehaviorTree);
 		}
 	}
+
+	Super::OnPossess(InPawn);
 }
 
 void AMonsterController::OnUnPossess()
@@ -117,8 +117,8 @@ void AMonsterController::OnTargetDetect(AActor* Target, FAIStimulus Stimulus)
 			Target = Controller->GetPawn<AActor>();
 		}
 
-		if (GEngine) GEngine->AddOnScreenDebugMessage(-1, 1.f, FColor::Blue,
-			TEXT("Detected Target"));
+		//if (GEngine) GEngine->AddOnScreenDebugMessage(-1, 1.f, FColor::Blue,
+		//	TEXT("Detected Target"));
 
 		if (//Target->ActorHasTag(TEXT("Player")) &&
 			Target != Blackboard->GetValueAsObject(MonsterDefaultKey::mTarget))
@@ -128,8 +128,8 @@ void AMonsterController::OnTargetDetect(AActor* Target, FAIStimulus Stimulus)
 	}
 	else
 	{
-		if (GEngine) GEngine->AddOnScreenDebugMessage(-1, 1.f, FColor::Red,
-			TEXT("Lost Target"));
+		//if (GEngine) GEngine->AddOnScreenDebugMessage(-1, 1.f, FColor::Red,
+		//	TEXT("Lost Target"));
 	
 		Blackboard->SetValueAsObject(MonsterDefaultKey::mTarget, nullptr);
 	}

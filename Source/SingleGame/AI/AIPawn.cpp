@@ -2,6 +2,8 @@
 
 
 #include "AIPawn.h"
+#include "AIPatrolPoint.h"
+#include "AIController.h"
 
 // Sets default values
 AAIPawn::AAIPawn()
@@ -56,4 +58,29 @@ void AAIPawn::Tick(float DeltaTime)
 void AAIPawn::PossessedBy(AController* NewController)
 {
 	Super::PossessedBy(NewController);
+
+	RegisterPatrolPoint();
+}
+
+void AAIPawn::RegisterPatrolPoint()
+{
+	if (mPatrolPointArr.Num() <= 1)	return;
+
+	AAIController* Control = GetController<AAIController>();
+
+	if (IsValid(Control))
+	{
+		Control->GetBlackboardComponent()->SetValueAsObject(
+			MonsterDefaultKey::mPatrolPoint, mPatrolPointArr[mNextPatrolPointIdx]
+		);
+		mNextPatrolPointIdx = (mNextPatrolPointIdx + 1) % mPatrolPointArr.Num();
+	}
+}
+
+void AAIPawn::SetPatrolPoints(const TArray<class AAIPatrolPoint*>& Array)
+{
+	for (const auto& Element : Array)
+	{
+		mPatrolPointArr.Add(Element);
+	}
 }

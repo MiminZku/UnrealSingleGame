@@ -28,6 +28,7 @@ class MonsterDefaultKey
 public:
 	static FName mTarget;
 	static FName mAttackEnd;
+	static FName mPatrolPoint;
 };
 
 USTRUCT(BlueprintType)

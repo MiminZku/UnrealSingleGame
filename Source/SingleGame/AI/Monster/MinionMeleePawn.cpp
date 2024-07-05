@@ -32,7 +32,7 @@ AMinionMeleePawn::AMinionMeleePawn()
 		mAttackParticle = HitAsset.Object;
 	}
 
-	mMonsterInfoKey = TEXT("Minion");
+	mMonsterInfoKey = TEXT("MinionMelee");
 }
 
 void AMinionMeleePawn::BeginPlay()
