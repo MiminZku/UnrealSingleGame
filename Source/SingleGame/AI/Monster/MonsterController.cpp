@@ -21,7 +21,7 @@ AMonsterController::AMonsterController()
 	
 	mSightConfig->SightRadius = 2000.f;
 	mSightConfig->LoseSightRadius = 2500.f;
-	mSightConfig->PeripheralVisionAngleDegrees = 60.f;
+	mSightConfig->PeripheralVisionAngleDegrees = 120.f;
 	//mSightConfig->SetMaxAge(0.f);
 	mSightConfig->DetectionByAffiliation.bDetectEnemies = true;
 	mSightConfig->DetectionByAffiliation.bDetectNeutrals = false;
