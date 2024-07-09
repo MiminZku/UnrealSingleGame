@@ -41,7 +41,11 @@ public:
 	UFUNCTION()
 	void AnimNotify_DeathEnd();
 
+	UFUNCTION()
+	void AnimNotify_HitEnd();
+
 	void SetAnimData(const FName& Key);
+	void PlayMontage(const FString& Name);
 
 protected:
 	UPROPERTY(VisibleAnywhere, BlueprintReadOnly)
@@ -53,19 +57,6 @@ protected:
 	UPROPERTY(EditAnywhere, BlueprintReadOnly)
 	TMap<FString, UBlendSpace*> mBlendSpaceMap;
 
-	//UPROPERTY(EditAnywhere, BlueprintReadOnly)
-	//UAnimSequence* mIdle;
-
-	//UPROPERTY(EditAnywhere, BlueprintReadOnly)
-	//UAnimSequence* mWalk;
-
-	//UPROPERTY(EditAnywhere, BlueprintReadOnly)
-	//UAnimSequence* mRun;
-
-	//UPROPERTY(EditAnywhere, BlueprintReadOnly)
-	//UAnimSequence* mAttack;
-
-	//UPROPERTY(EditAnywhere, BlueprintReadOnly)
-	//UAnimSequence* mDeath;
-
+	UPROPERTY(EditAnywhere, BlueprintReadOnly)
+	TMap<FString, UAnimMontage*> mMontageMap;
 };

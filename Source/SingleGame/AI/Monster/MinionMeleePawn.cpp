@@ -66,7 +66,7 @@ void AMinionMeleePawn::SetState(EAIState State)
 		mMinionAnim->ChangeAnim(EMonsterDefaultAnim::Death);
 		break;
 	case EAIState::Hit:
-		mMinionAnim->ChangeAnim(EMonsterDefaultAnim::Hit);
+		mMinionAnim->PlayMontage(TEXT("Hit"));
 		break;
 	default:
 		break;
@@ -86,13 +86,13 @@ void AMinionMeleePawn::Attack()
 		FQuat::Identity, ECollisionChannel::ECC_GameTraceChannel6,
 		FCollisionShape::MakeSphere(50.f), params);
 
-#if ENABLE_DRAW_DEBUG
-	FColor DrawColor = Collision ? FColor::Orange : FColor::Blue;
-
-	DrawDebugCapsule(GetWorld(), (Start + End) / 2.f,
-		100.f, 50.f, FRotationMatrix::MakeFromZ(GetActorForwardVector()).ToQuat(),
-		DrawColor, false, 1.f);
-#endif
+//#if ENABLE_DRAW_DEBUG
+//	FColor DrawColor = Collision ? FColor::Orange : FColor::Blue;
+//
+//	DrawDebugCapsule(GetWorld(), (Start + End) / 2.f,
+//		100.f, 50.f, FRotationMatrix::MakeFromZ(GetActorForwardVector()).ToQuat(),
+//		DrawColor, false, 1.f);
+//#endif
 
 	if (Collision)
 	{

@@ -66,8 +66,6 @@ float AMonsterPawn::TakeDamage(float DamageAmount, FDamageEvent const& DamageEve
 {
 	DamageAmount = Super::TakeDamage(DamageAmount, DamageEvent, EventInstigator, DamageCauser);
 
-	mLife -= DamageAmount;
-
 	if (mLife <= 0.f)
 	{
 		SetState(EAIState::Death);
@@ -79,9 +77,15 @@ float AMonsterPawn::TakeDamage(float DamageAmount, FDamageEvent const& DamageEve
 			//사유를 전달하며 비헤이비어 트리 종료
 			Ctrl->GetBrainComponent()->StopLogic(TEXT("Death"));
 		}
-
-		
-		//Destroy();
 	}
+	else
+	{
+		//if (GEngine) GEngine->AddOnScreenDebugMessage(-1, 1.f, FColor::Red,
+		//	TEXT("Taked Damage"));
+		mLife -= DamageAmount;
+		SetState(EAIState::Hit);
+	}
+
+
 	return DamageAmount;
 }
