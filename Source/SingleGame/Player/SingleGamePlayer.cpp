@@ -29,6 +29,8 @@ ASingleGamePlayer::ASingleGamePlayer()
 	GetCharacterMovement()->bOrientRotationToMovement = true;
 
 	GetMesh()->SetCollisionEnabled(ECollisionEnabled::NoCollision);
+	GetMesh()->bReceivesDecals = false;
+
 	GetCapsuleComponent()->SetCollisionProfileName(TEXT("Player"));
 
 	Tags.Add(FName("Player"));
