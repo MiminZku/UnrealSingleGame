@@ -3,12 +3,13 @@
 
 #include "BTTask_TraceTarget.h"
 #include "../AIPawn.h"
+#include "../Monster/MonsterPawn.h"
 #include "AIController.h"
 
 UBTTask_TraceTarget::UBTTask_TraceTarget()
 {
 	NodeName = TEXT("BTT_TraceTarget");
-	AcceptableRadius = 100.f;
+	AcceptableRadius = 50.f;
 	BlackboardKey.SelectedKeyName = MonsterDefaultKey::mTarget;
 }
 
@@ -18,7 +19,15 @@ EBTNodeResult::Type UBTTask_TraceTarget::ExecuteTask(
 	EBTNodeResult::Type Result = Super::ExecuteTask(OwnerComp, NodeMemory);
 
 	AAIPawn* AIPawn = OwnerComp.GetAIOwner()->GetPawn<AAIPawn>();
-	if (IsValid(AIPawn))	AIPawn->SetState(EAIState::Trace);
+	if (IsValid(AIPawn))
+	{
+		AIPawn->SetState(EAIState::Trace);
+		AMonsterPawn* MonsterPawn = Cast<AMonsterPawn>(AIPawn);
+		if (IsValid(MonsterPawn))
+		{
+			AcceptableRadius = MonsterPawn->GetAttackDistance();
+		}
+	}
 
 	return Result;
 }
