@@ -18,5 +18,4 @@ enum class EPlayerJob : uint8
 	Archer,
 	Magicion,
 	Soldier,
-	
 };
