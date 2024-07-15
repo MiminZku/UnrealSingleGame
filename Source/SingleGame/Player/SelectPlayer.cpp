@@ -3,6 +3,7 @@
 
 #include "SelectPlayer.h"
 #include "SelectPawn.h"
+#include "../UI/CharacterSelect/CharacterSelectWidget.h"
 
 // Sets default values
 ASelectPlayer::ASelectPlayer()
@@ -16,7 +17,10 @@ ASelectPlayer::ASelectPlayer()
 	SetRootComponent(mRoot);
 	mCamera->SetupAttachment(mRoot);
 
-
+	static ConstructorHelpers::FClassFinder<UCharacterSelectWidget>
+		Widget(TEXT("/Script/UMGEditor.WidgetBlueprint'/Game/_UI/CharacterSelect/WB_CharacterSelect.WB_CharacterSelect_C'"));
+	if (Widget.Succeeded())
+		mWidgetClass = Widget.Class;
 }
 
 // Called when the game starts or when spawned
@@ -31,6 +35,15 @@ void ASelectPlayer::BeginPlay()
 	FInputModeGameAndUI Mode;
 	GetController<APlayerController>()->SetInputMode(Mode);
 	GetController<APlayerController>()->SetShowMouseCursor(true);
+
+	if (IsValid(mWidgetClass))
+	{
+		mWidget = CreateWidget<UCharacterSelectWidget>(GetWorld(),
+			mWidgetClass);
+		
+		if (IsValid(mWidget))
+			mWidget->AddToViewport(/* 그리는 순서 */);
+	}
 }
 
 // Called every frame

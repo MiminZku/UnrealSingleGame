@@ -34,4 +34,8 @@ protected:
 	UCameraComponent* mCamera;
 
 	class ASelectPawn* mOnMouseActor;
+
+	TSubclassOf<class UCharacterSelectWidget> mWidgetClass;
+
+	class UCharacterSelectWidget* mWidget;
 };
