@@ -3,6 +3,7 @@
 #pragma once
 
 #include "../GameInfo.h"
+#include "InputActionValue.h"
 #include "GameFramework/Pawn.h"
 #include "SelectPlayer.generated.h"
 
@@ -25,6 +26,9 @@ public:
 
 	// Called to bind functionality to input
 	virtual void SetupPlayerInputComponent(class UInputComponent* PlayerInputComponent) override;
+
+protected:
+	void ClickAction(const FInputActionValue& Value);
 
 protected:
 	UPROPERTY(VisibleAnywhere)

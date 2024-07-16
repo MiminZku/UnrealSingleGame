@@ -2,7 +2,7 @@
 
 #pragma once
 
-#include "CoreMinimal.h"
+#include "../GameInfo.h"
 #include "InputMappingContext.h"
 #include "InputAction.h"
 #include "UObject/NoExportTypes.h"
@@ -26,4 +26,18 @@ public:
 	UInputAction* mRotate = nullptr;
 	UInputAction* mJump = nullptr;
 	UInputAction* mAttack = nullptr;
+};
+
+UCLASS()
+class SINGLEGAME_API USelectInputData : public UObject
+{
+	GENERATED_BODY()
+
+public:
+	USelectInputData();
+
+public:
+	UInputMappingContext* mSelectContext = nullptr;
+
+	UInputAction* mSelect = nullptr;
 };

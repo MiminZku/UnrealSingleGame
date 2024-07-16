@@ -3,12 +3,15 @@
 
 #include "SelectPlayer.h"
 #include "SelectPawn.h"
+#include "../Input/DefaultInputData.h"
+#include "EnhancedInputComponent.h"
+#include "EnhancedInputSubsystems.h"
 #include "../UI/CharacterSelect/CharacterSelectWidget.h"
 
 // Sets default values
 ASelectPlayer::ASelectPlayer()
 {
- 	// Set this pawn to call Tick() every frame.  You can turn this off to improve performance if you don't need it.
+	// Set this pawn to call Tick() every frame.  You can turn this off to improve performance if you don't need it.
 	PrimaryActorTick.bCanEverTick = true;
 
 	mRoot = CreateDefaultSubobject<USceneComponent>(TEXT("Root"));
@@ -27,7 +30,7 @@ ASelectPlayer::ASelectPlayer()
 void ASelectPlayer::BeginPlay()
 {
 	Super::BeginPlay();
-	
+
 	// InputMode 3가지
 	// GameOnly : 기본으로 설정, 커서가 화면 가운데에 락 걸리고 UI 클릭 불가능
 	// UIOnly : 커서 락이 풀리며 UI들을 클릭할 수 있게 해줌
@@ -36,19 +39,33 @@ void ASelectPlayer::BeginPlay()
 	GetController<APlayerController>()->SetInputMode(Mode);
 	GetController<APlayerController>()->SetShowMouseCursor(true);
 
-	if (IsValid(mWidgetClass))
+	//if (IsValid(mWidgetClass))
+	//{
+	//	mWidget = CreateWidget<UCharacterSelectWidget>(GetWorld(),
+	//		mWidgetClass);
+	//	
+	//	if (IsValid(mWidget))
+	//		mWidget->AddToViewport(/* 그리는 순서 */);
+	//}
+
+	APlayerController* PlayerController =
+		Cast<APlayerController>(GetController());
+
+	if (PlayerController)
 	{
-		mWidget = CreateWidget<UCharacterSelectWidget>(GetWorld(),
-			mWidgetClass);
-		
-		if (IsValid(mWidget))
-			mWidget->AddToViewport(/* 그리는 순서 */);
+		UEnhancedInputLocalPlayerSubsystem* Subsystem =
+			ULocalPlayer::GetSubsystem<UEnhancedInputLocalPlayerSubsystem>(PlayerController->GetLocalPlayer());
+
+		// 클래스 디폴트 오브젝트(CDO)를 얻어온다.
+		const USelectInputData* InputData = GetDefault<USelectInputData>();
+
+		Subsystem->AddMappingContext(InputData->mSelectContext, 0 /* 우선순위 */);
 	}
 }
 
 // Called every frame
 void ASelectPlayer::Tick(float DeltaTime)
-{ 
+{
 	Super::Tick(DeltaTime);
 
 	FHitResult HitResult;
@@ -58,11 +75,25 @@ void ASelectPlayer::Tick(float DeltaTime)
 	if (Collision)
 	{
 		ASelectPawn* SelectPawn = Cast<ASelectPawn>(HitResult.GetActor());
-		if (IsValid(SelectPawn))	mOnMouseActor = SelectPawn;
+		if (IsValid(SelectPawn))
+		{
+			mOnMouseActor = SelectPawn;
+			if (GEngine) GEngine->AddOnScreenDebugMessage(-1, 0.1f, FColor::Black,
+				mOnMouseActor->GetName());
+			mOnMouseActor->OnMouse(true);
+		}
+		else
+		{
+			mOnMouseActor = nullptr;
+		}
 	}
 	else
 	{
-
+		if (mOnMouseActor)
+		{
+			mOnMouseActor->OnMouse(false);
+		}
+		mOnMouseActor = nullptr;
 	}
 }
 
@@ -71,5 +102,29 @@ void ASelectPlayer::SetupPlayerInputComponent(UInputComponent* PlayerInputCompon
 {
 	Super::SetupPlayerInputComponent(PlayerInputComponent);
 
+
+	UEnhancedInputComponent* EnhancedInputComponent =
+		Cast<UEnhancedInputComponent>(PlayerInputComponent);
+
+	if (EnhancedInputComponent)
+	{
+		// 클래스 디폴트 오브젝트(CDO)를 얻어온다.
+		const USelectInputData* InputData = GetDefault<USelectInputData>();
+
+		EnhancedInputComponent->BindAction(InputData->mSelect,
+			ETriggerEvent::Started,
+			this, &ASelectPlayer::ClickAction);
+	}
 }
 
+void ASelectPlayer::ClickAction(const FInputActionValue& Value)
+{
+	//if (GEngine) GEngine->AddOnScreenDebugMessage(-1, 1.f, FColor::Blue, 
+	//	Value.ToString());
+
+	if (!mOnMouseActor)	return;
+
+	FString Option = FString::Printf(TEXT("Job = %d"), (int32)mOnMouseActor->GetJob());
+
+	UGameplayStatics::OpenLevel(GetWorld(), TEXT("Main"), true, Option);
+}

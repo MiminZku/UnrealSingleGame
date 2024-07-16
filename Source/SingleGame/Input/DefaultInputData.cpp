@@ -54,3 +54,23 @@ UDefaultInputData::UDefaultInputData()
 		}
 	}
 }
+
+USelectInputData::USelectInputData()
+{
+	{
+		static ConstructorHelpers::FObjectFinder<UInputMappingContext>
+			Asset(TEXT("/Script/EnhancedInput.InputMappingContext'/Game/_Input/IMC_Select.IMC_Select'"));
+		if (Asset.Succeeded())
+		{
+			mSelectContext = Asset.Object;
+		}
+	}
+	{
+		static ConstructorHelpers::FObjectFinder<UInputAction>
+			Asset(TEXT("/Script/EnhancedInput.InputAction'/Game/_Input/IA_LeftClick.IA_LeftClick'"));
+		if (Asset.Succeeded())
+		{
+			mSelect = Asset.Object;
+		}
+	}
+}

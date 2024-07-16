@@ -16,5 +16,11 @@ class SINGLEGAME_API AMainGameMode : public AGameModeBase
 	
 public:
 	AMainGameMode();
-	~AMainGameMode();
+
+public:
+	virtual void InitGame(const FString& MapName, const FString& Options, FString& ErrorMessage);
+	virtual void PreLogin(const FString& Options, const FString& Address, const FUniqueNetIdRepl& UniqueId, FString& ErrorMessage);
+	virtual APlayerController* Login(UPlayer* NewPlayer, ENetRole InRemoteRole, const FString& Portal, const FString& Options, const FUniqueNetIdRepl& UniqueId, FString& ErrorMessage);
+	virtual void PostLogin(APlayerController* NewPlayer);
+
 };

@@ -28,7 +28,7 @@ public:
 
 public:
 	void OnMouse(bool Overlap);
-
+	EPlayerJob GetJob() { return mJob; }
 
 protected:
 	UPROPERTY(VisibleAnywhere)
