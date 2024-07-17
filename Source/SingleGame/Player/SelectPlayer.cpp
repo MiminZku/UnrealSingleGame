@@ -119,8 +119,8 @@ void ASelectPlayer::SetupPlayerInputComponent(UInputComponent* PlayerInputCompon
 
 void ASelectPlayer::ClickAction(const FInputActionValue& Value)
 {
-	//if (GEngine) GEngine->AddOnScreenDebugMessage(-1, 1.f, FColor::Blue, 
-	//	Value.ToString());
+	if (GEngine) GEngine->AddOnScreenDebugMessage(-1, 1.f, FColor::Blue, 
+		Value.ToString());
 
 	if (!mOnMouseActor)	return;
 
