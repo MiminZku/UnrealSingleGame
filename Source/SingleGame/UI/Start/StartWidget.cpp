@@ -16,6 +16,7 @@ void UStartWidget::NativePreConstruct()
 
 void UStartWidget::NativeConstruct()
 {
+
 }
 
 void UStartWidget::NativeDestruct()
